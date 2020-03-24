@@ -27,7 +27,7 @@
         </div>
       <div class="collapse navbar-collapse" id="navbarToggle">
         <div class="navbar-nav mr-auto">
-          <a href="{% url 'core:menu' %} ">Home</a>
+          <a href="{% url 'core:menu' %} ">Menu</a>
           <a  href="{% url 'about' %}">About</a>
         </div>
         <!-- Navbar Right Side -->
@@ -131,8 +131,8 @@
                         <span class="badge purple mr-1"> {{object.category}} </span>
                       </div>
                   <div class='card-footer text-center'>
-                  <a href="#" class="btn btn-success">Add to Cart</a>
-                  <a href="#" class="btn btn-danger">Remove from Cart</a>
+                  <a href="{{ object.get_add_to_cart_url }}" class="btn btn-success">Add to Cart</a>
+                  <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger">Remove from Cart</a>
                   </div>
                </div>
         </div>

@@ -27,8 +27,20 @@
       <li><a href="{% url 'about' %}">About Us</a></li>
       <li><a href="{% url 'core:menu' %}">Menu</a></li>
       <li><a href="{% url 'contact' %}">Contact Us</a></li>
-      <li><a href="{% url 'users:login' %}">Login</a></li>
-      <li><a href="{% url 'users:signup' %}">Register</a></li>
+<!--       <li><a href="{% url 'users:login' %}">Login</a></li>
+      <li><a href="{% url 'users:signup' %}">Register</a></li> -->
+      {% if user.is_authenticated %}
+                <li><a  href=" {% url 'users:logout' %} ">Logout   </a></li>
+                <li><a  href=" {% url 'core:order-summary' %} ">Cart  </a></li>
+                <li><a  href="{% url 'users:profile' %} ">Profile  </a></li>
+                <li><a href="{% url 'core:product-create' %}"> Sell</a></li>
+
+      {% else %}
+
+                <li><a href=" {% url 'users:login' %} ">Login</a></li>
+                <li><a href=" filter/{% url 'users:signup' %} ">Register</a></li>
+
+      {% endif %}
     </ul>
 
 </div>
