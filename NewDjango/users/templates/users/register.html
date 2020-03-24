@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'users/register.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+  </head>
+  <body>
+
+<div >
+  <img class="leftdecoration" src="{% static 'users/images/Asset212x.png' %}" alt="leftdecoration">
+  <img src="" alt="">
+
+</div>
+
+
+
+
+
+
+    <div >
+        <form class="form"   method="POST">
+                {% csrf_token %}
+                {{ form.password2.errors }}
+                {{ form.password1.errors }}
+                {{ form.username.errors }}
+                {{ form.first_name }}
+                {{ form.last_name }}
+                <br>
+                {{ form.email }}
+                <br>
+                {{ form.username }}
+                <br>
+                {{ form.college }}
+                <br>
+                {{ form.password1 }}
+                <br>
+                {{ form.password2}}
+
+
+                <br>
+                <button type="submit" name="button" >Register</button>
+
+
+
+
+        </form>
+
+    </div>
+
+
+
+  </body>
+</html>

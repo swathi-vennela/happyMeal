@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'users/login.css' %}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+  <body>
+
+
+
+
+
+<div class="image container">
+
+  <img class="posteregg"src="{% static 'users/images/Asset292x.png' %}" alt="login poster">
+    <img class="rightbase" src="{% static 'users/images/Asset552x.png' %}" alt="rightbase">
+    <img class="greenstem" src="{% static 'users/images/Asset282x.png' %}" alt="greenstem">
+    <img class="discount" src="{% static 'users/images/Asset272x.png' %}" alt="discount">
+    <img class="discborder" src="{% static 'users/images/Asset262x.png' %}" alt="discborder">
+
+    <img class="fdot" src="{% static 'users/images/Asset232x.png' %}"alt="fdot">
+    <img class="sdot" src="{% static 'users/images/Asset242x.png' %}" alt="sdot">
+    <img class="tdot" src="{% static 'users/images/Asset252x.png' %}" alt="tdot">
+
+    <img class="ftext" src="{% static 'users/images/Asset402x.png' %}" alt="ftext">
+    <img class="stext" src="{% static 'users/images/Asset382x.png' %}" alt="stext">
+    <img class="ttext" src="{% static 'users/images/Asset392x.png' %}" alt="ttext">
+</div>
+
+
+
+
+
+
+<p class="login">Login</p>
+
+
+<div >
+
+
+        <form class="form"  method="POST">
+            {% csrf_token %}
+
+            {{ form.errors}}
+            {{ form.username}}
+
+            <br>
+            {{ form.password }}
+
+            <br>
+                 <button type="submit" name="button" >Login</button>
+
+        </form>
+        <br>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

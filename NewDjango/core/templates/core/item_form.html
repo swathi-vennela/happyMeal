@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Create New Post</title>
+    <link rel="stylesheet" href="{% static 'users/register.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+  </head>
+  <body>
+
+<div >
+  <img class="leftdecoration" src="{% static 'users/images/Asset212x.png' %}" alt="leftdecoration">
+  <img src="" alt="">
+
+</div>
+
+
+
+
+
+
+    <div >
+        <form class="form"   method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <fieldset class="form-group">
+                    {{ form }}
+                </fieldset>
+
+                <button type="submit" name="button" >Post</button>
+
+
+
+
+        </form>
+
+    </div>
+
+
+
+  </body>
+</html>
