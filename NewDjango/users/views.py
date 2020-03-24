@@ -43,7 +43,7 @@ def student_signup(request):
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = SignupForm()
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'users/user_register.html', {'form': form})
 
 
 def store_signup(request):
@@ -70,7 +70,7 @@ def store_signup(request):
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = SignupForm()
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'users/store_register.html', {'form': form})
 
 
 def activate(request, uidb64, token):

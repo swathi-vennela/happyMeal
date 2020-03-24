@@ -57,6 +57,10 @@ class SignupForm(UserCreationForm):
         max_length=13,
         widget=forms.TextInput(attrs={'placeholder': 'College Name'})
     )
+    store = forms.CharField(
+        max_length=13,
+        widget=forms.TextInput(attrs={'placeholder': 'Store Name'})
+    )
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'})
                                  )
     last_name = forms.CharField(
