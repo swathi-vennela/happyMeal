@@ -1,9 +1,11 @@
 
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from .models import User, Profile
+from .models import User, Profile, UserFeedback
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
 from django.forms.widgets import PasswordInput, TextInput
+
+
 
 
 class PasswordResetFormCustom(PasswordResetForm):
@@ -57,7 +59,7 @@ class SignupForm(UserCreationForm):
         max_length=13,
         widget=forms.TextInput(attrs={'placeholder': 'College Name'})
     )
-    
+
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'})
                                  )
     last_name = forms.CharField(
@@ -87,3 +89,10 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+
+
+class UserFeedbackForm(forms.ModelForm):
+
+    class Meta():
+        model = UserFeedback
+        fields = '__all__'

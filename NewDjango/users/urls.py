@@ -22,6 +22,7 @@ urlpatterns = [
              template_name='users/password_reset.html', form_class=PasswordResetFormCustom
          ),
          name='password_reset'),
+    url(r'^UserFeedback/$',views.UserFeedback,name='UserFeedback')
     # path('password-reset/done/',
     #      auth_views.PasswordResetDoneView.as_view(
     #          template_name='users/password_reset_done.html'

@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 
 from .decorators import store_required
-from .forms import SignupForm, PasswordChangeFormNew, UserUpdateForm, ProfileUpdateForm
+from .forms import SignupForm, PasswordChangeFormNew, UserUpdateForm, ProfileUpdateForm, UserFeedbackForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -87,6 +87,25 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+
+def UserFeedback(request):
+
+    form = UserFeedbackForm()
+
+    if request.method == 'POST':
+        
+        form = UserFeedbackForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponse('Your feedback has been recorded..')
+
+        else:
+            print("Error Form!")
+
+    else:
+        return render(request,'users/UserFeedback.html',{'form':form})
+
 
 @login_required
 def change_password(request):
