@@ -21,8 +21,10 @@ from django.urls import reverse
 
 def student_signup(request):
     if request.method == 'POST':
+        print("Im in if")
         form = SignupForm(request.POST)
         if form.is_valid():
+            print("You've entered a valid form")
             user = form.save(commit=False)
             user.is_active = False
             user.is_student = True
@@ -41,9 +43,12 @@ def student_signup(request):
             )
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
+        else:
+            print("The form isnt valid")
     else:
+        print("Im in else")
         form = SignupForm()
-    return render(request, 'users/user_register.html', {'form': form})
+    return render(request, 'users/register.html', {'form': form})
 
 
 def store_signup(request):
@@ -70,7 +75,7 @@ def store_signup(request):
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = SignupForm()
-    return render(request, 'users/store_register.html', {'form': form})
+    return render(request, 'users/register.html', {'form': form})
 
 
 def activate(request, uidb64, token):
