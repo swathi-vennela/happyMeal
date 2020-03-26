@@ -8,7 +8,8 @@ from .views import(
         remove_from_cart,
         remove_single_item_from_cart,
         OrderSummaryView,
-        filterItems
+        filterItems,
+        search,
     )
 from . import views
 
@@ -17,6 +18,7 @@ app_name = 'core'
 urlpatterns = [
     path('menu/', menu , name='menu'),
     path('filter/', filterItems, name='filter'),
+    path('search/', search, name='search'),
     path('product/<slug>/', ItemDetailView.as_view(), name='product'),
     path('item/new/', ItemCreateView.as_view(), name='product-create'),
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),

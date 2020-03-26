@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Q 
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
@@ -78,6 +79,37 @@ def menu(request):
 # 		if filterList[1]:
 # 			print('Filtering based on ',filterList[1])
 # 	return render(request, 'core/menu.html',context={'items':Item.objects.all()})
+
+# def search(query=None):
+# 	query_set = []
+# 	queries = query.split(" ")
+# 	for q in queries:
+# 		items=Item.objects.filter(
+# 				Q(title__icontains=q) |
+# 				Q(description__icontains=q)
+# 			).distinct()
+
+# 		for item in items:
+# 			query_set.append(item)
+
+# 	return list(set(query_set))
+#	query = request.GET.get('q')
+
+def search(request):
+	template = 'core/menu.html'
+	query_set = []
+	query = request.GET.get('q')
+	queries = query.split(" ")
+	for q in queries:
+		items=Item.objects.filter(
+				Q(title__icontains=q) |
+				Q(description__icontains=q)
+			).distinct()
+
+		for item in items:
+			query_set.append(item)
+
+	return render(request, 'core/menu.html', context={'items': list(set(query_set))})
 
 
 class ItemCreateView(CreateView):

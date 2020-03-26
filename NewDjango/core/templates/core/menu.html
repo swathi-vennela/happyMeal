@@ -104,6 +104,14 @@
 
     </form>
 
+  <form method="GET" action="{% url 'core:search' %}">
+    <input name="q" value="{{request.GET.q}}" placeholder="search..">
+    <button class="btn btn-success" type="submit">
+      Search
+    </button>
+    
+  </form>
+
 <!--       <div>
       <label for="minprice">Min Price</label>
       <input id="minprice" name="minprice" size="5" type="text" />
