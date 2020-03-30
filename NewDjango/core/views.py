@@ -251,30 +251,16 @@ def filterItems(request):
 	return render(request, 'core/menu.html', context={'items' : Item.objects.all()})
 
 def nutriAnalysis(request):
-	API_ENDPOINT = "https://api.edamam.com/api/nutrition-details?app_id=313b0826&app_key=a7a53d7d3aa0ed966736ccad0312ebec"
+	url = "https://api.edamam.com/api/nutrition-details?app_id=313b0826&app_key=a7a53d7d3aa0ed966736ccad0312ebec"
 	 
 	data =	{
-			  "title": "Fresh Ham Roasted With Rye Bread and Dried Fruit Stuffing",
-			  "prep": "1. Have your butcher bone and butterfly the ham and score the fat in a diamond pattern. ...",
-			  "yield": "About 15 servings",
+			  "title": "Banana cookies",
 			  "ingr": [
-			    "1 fresh ham, about 18 pounds, prepared by your butcher (See Step 1)",
-			    "7 cloves garlic, minced",
-			    "1 tablespoon caraway seeds, crushed",
-			    "4 teaspoons salt",
-			    "Freshly ground pepper to taste",
-			    "1 teaspoon olive oil",
-			    "1 medium onion, peeled and chopped",
-			    "3 cups sourdough rye bread, cut into 1/2-inch cubes",
-			    "1 1/4 cups coarsely chopped pitted prunes",
-			    "1 1/4 cups coarsely chopped dried apricots",
-			    "1 large tart apple, peeled, cored and cut into 1/2-inch cubes",
-			    "2 teaspoons chopped fresh rosemary",
-			    "1 egg, lightly beaten",
-			    "1 cup chicken broth, homemade or low-sodium canned"
+			    "1 cup rice",
+			    "400 g chicken",
 			  ]
 			}
-	r = requests.post(url = API_ENDPOINT, data = data) 
+	r = requests.post(url, json=data) 
 	print(r.text)
 	return render(request,'core/menu.html')
 
