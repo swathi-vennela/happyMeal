@@ -1,3 +1,4 @@
+import requests
 from django.contrib import messages
 from django.db.models import Q 
 from django.core.exceptions import ObjectDoesNotExist
@@ -80,21 +81,6 @@ def menu(request):
 # 			print('Filtering based on ',filterList[1])
 # 	return render(request, 'core/menu.html',context={'items':Item.objects.all()})
 
-# def search(query=None):
-# 	query_set = []
-# 	queries = query.split(" ")
-# 	for q in queries:
-# 		items=Item.objects.filter(
-# 				Q(title__icontains=q) |
-# 				Q(description__icontains=q)
-# 			).distinct()
-
-# 		for item in items:
-# 			query_set.append(item)
-
-# 	return list(set(query_set))
-#	query = request.GET.get('q')
-
 def search(request):
 	template = 'core/menu.html'
 	query_set = []
@@ -110,6 +96,22 @@ def search(request):
 			query_set.append(item)
 
 	return render(request, 'core/menu.html', context={'items': list(set(query_set))})
+
+# def search(request):
+# 	template = 'core/menu.html'
+# 	query_set = []
+# 	query = request.GET.get('q')
+# 	queries = query.split(" ")
+# 	for q in queries:
+# 		items=Item.objects.filter(
+# 				Q(title__icontains=q) |
+# 				Q(description__icontains=q)
+# 			).distinct()
+
+# 		for item in items:
+# 			query_set.append(item)
+
+# 	return render(request, 'core/menu.html', context={'items': list(set(query_set))})
 
 
 class ItemCreateView(CreateView):
@@ -247,6 +249,63 @@ def filterItems(request):
 		return render(request, 'core/menu.html', context = {'items' : filter_qs})
 
 	return render(request, 'core/menu.html', context={'items' : Item.objects.all()})
+
+def nutriAnalysis(request):
+	API_ENDPOINT = "https://api.edamam.com/api/nutrition-details?app_id=313b0826&app_key=a7a53d7d3aa0ed966736ccad0312ebec"
+	 
+	data =	{
+			  "title": "Fresh Ham Roasted With Rye Bread and Dried Fruit Stuffing",
+			  "prep": "1. Have your butcher bone and butterfly the ham and score the fat in a diamond pattern. ...",
+			  "yield": "About 15 servings",
+			  "ingr": [
+			    "1 fresh ham, about 18 pounds, prepared by your butcher (See Step 1)",
+			    "7 cloves garlic, minced",
+			    "1 tablespoon caraway seeds, crushed",
+			    "4 teaspoons salt",
+			    "Freshly ground pepper to taste",
+			    "1 teaspoon olive oil",
+			    "1 medium onion, peeled and chopped",
+			    "3 cups sourdough rye bread, cut into 1/2-inch cubes",
+			    "1 1/4 cups coarsely chopped pitted prunes",
+			    "1 1/4 cups coarsely chopped dried apricots",
+			    "1 large tart apple, peeled, cored and cut into 1/2-inch cubes",
+			    "2 teaspoons chopped fresh rosemary",
+			    "1 egg, lightly beaten",
+			    "1 cup chicken broth, homemade or low-sodium canned"
+			  ]
+			}
+	r = requests.post(url = API_ENDPOINT, data = data) 
+	print(r.text)
+	return render(request,'core/menu.html')
+
+
+
+
+
+
+
+
+	# url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid=bca4a874f27d33fe4bd0dadd4d83ead6'
+	# #city = 'London'
+
+	# if request.method == 'POST':
+
+	# 		city = request.POST['cityName']
+	# 		r = requests.get(url.format(city)).json()
+	# 		print(r)
+	# 		if r['cod'] == 200:				
+	# 			city_weather = {
+	# 				'city': city,
+	# 				'temperature': r['main']['temp'],
+	# 				'description': r['weather'][0]['description'],
+	# 				'icon': r['weather'][0]['icon'],
+	# 			}
+	# 			return render(request, 'core/base.html',{'city_weather':city_weather})
+	# 		else:
+	# 			messages.info(request, "Please enter a valid city name")
+
+	# return render(request,'core/base.html')
+
 
 
 

@@ -38,7 +38,7 @@
       {% else %}
 
                 <li><a href=" {% url 'users:login' %} ">Login</a></li>
-                <li><a href=" filter/{% url 'users:signup' %} ">Register</a></li>
+                <li><a href=" {% url 'users:signup' %} ">Register</a></li>
 
       {% endif %}
     </ul>
