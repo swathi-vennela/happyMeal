@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'payments.apps.PaymentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,11 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'healthymeal2021@gmail.com'
 EMAIL_HOST_PASSWORD = 'healthy@213'
 EMAIL_PORT = 587
+
+
+
+PAYTM_MERCHANT_ID = 'iwTqGB07379142501017'
+PAYTM_SECRET_KEY = '5OVSWbZOOq5!V8hW'
+PAYTM_WEBSITE = 'WEBSTAGING'
+PAYTM_CHANNEL_ID = 'WEB'
+PAYTM_INDUSTRY_TYPE_ID = 'Retail'

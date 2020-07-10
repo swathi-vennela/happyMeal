@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Loading...</title>
+</head>
+
+<body>
+    <h2></h2>
+    {% if error %}
+    <h3>{{ error }}</h3>
+    {% endif %}
+    <form method="post" name="f1">
+        {% csrf_token %}
+        <!-- <input type="submit" name="submit" value="Place Order" value="continue"> -->
+
+        <script type="text/javascript">
+            document.f1.submit();
+        </script>
+    </form>
+
+    
+</body>
+
+</html>
