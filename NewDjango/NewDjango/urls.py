@@ -31,6 +31,7 @@ urlpatterns = [
     path('',include('core.urls',namespace='core',)),
     #path('menu/', blog_views.menu, name='menu'),
     path('contact/', blog_views.contact, name='contact'),
+    path('', include('payments.urls',namespace='payments',)),
 
 
 ]
