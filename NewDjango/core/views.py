@@ -1,4 +1,4 @@
-import requests
+import requests 
 from django.contrib import messages
 from django.db.models import Q 
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,32 +13,6 @@ from django.views.generic import ListView, View, DetailView, CreateView
 from django.utils import timezone
 from .forms import FilterForm
 import logging
-
-# def menu(request):
-# 	return render(request, 'core/order_summary.html')  #we pass the dictionary containing info about a list of post objects where each element of the list corresponds to each user's post into the render function
-# 	#passing the context dictionary into render facilitates accessing the posts in menu.html template.
-
-
-# def menu(request):
-# 	if request.method == 'POST':
-# 		filterAtt = request.POST['filter1']
-# 		if filterAtt:
-# 			filter_qs = Item.objects.filter(category=filterAtt)
-# 			if filter_qs:
-# 				return render(request, 'core/menu.html',context={'items' : filter_qs})
-
-# 		filterAtt = request.POST['filter2']
-# 		if filterAtt:
-# 			if filterAtt == "lte100":
-# 				filter_qs = Item.objects.filter(price__range=(0,100))
-# 				return render(request, 'core/menu.html',context={'items' : filter_qs})
-# 			elif filterAtt == "100to200":
-# 				filter_qs = Item.objects.filter(price__range=(101,199))
-# 				return render(request, 'core/menu.html',context={'items' : filter_qs})
-# 			elif filterAtt == "gte200":
-# 				filter_qs = Item.objects.filter(price__range=(200,1000))
-# 				return render(request, 'core/menu.html',context={'items' : filter_qs})
-
 
 def menu(request):
 	if request.method == 'POST':
@@ -72,15 +46,6 @@ def menu(request):
 	return render(request, 'core/menu.html', context={'items' : Item.objects.all()})
 
 
-# def menu(request):
-# 	if request.method == 'POST':
-# 		filterList = [request.POST['filter1'], request.POST['filter2']]
-# 		 if filterList[0]:
-# 		 	return render(request, 'core/menu.html',context={'items' : Item.objects.filter(category=filterList[0])})
-# 		if filterList[1]:
-# 			print('Filtering based on ',filterList[1])
-# 	return render(request, 'core/menu.html',context={'items':Item.objects.all()})
-
 def search(request):
 	template = 'core/menu.html'
 	query_set = []
@@ -96,23 +61,6 @@ def search(request):
 			query_set.append(item)
 
 	return render(request, 'core/menu.html', context={'items': list(set(query_set))})
-
-# def search(request):
-# 	template = 'core/menu.html'
-# 	query_set = []
-# 	query = request.GET.get('q')
-# 	queries = query.split(" ")
-# 	for q in queries:
-# 		items=Item.objects.filter(
-# 				Q(title__icontains=q) |
-# 				Q(description__icontains=q)
-# 			).distinct()
-
-# 		for item in items:
-# 			query_set.append(item)
-
-# 	return render(request, 'core/menu.html', context={'items': list(set(query_set))})
-
 
 class ItemCreateView(CreateView):
 	model = Item
@@ -215,31 +163,6 @@ def remove_single_item_from_cart(request, slug):
 		return redirect("core:product", slug=slug)
 	return redirect("core:product", slug=slug)
 
-
-# def filterItems(request):
-
-# 	if request.method == 'POST':
-# 		fAtt = FilterForm(request.POST)
-
-# 		if fAtt.is_valid():
-# 			print ('Filtering the items based on ' ,fAtt.cleaned_data.get('filterAtt'))
-# 			filter_qs = Item.objects.filter(category=fAtt.cleaned_data.get('filterAtt'))
-# 			print(filter_qs)
-# 			return render(request, 'core/menu.html', context = {'items' : Item.objects.filter(category=fAtt.cleaned_data.get('filterAtt'))})
-
-# 	else:
-# 		fAtt = FilterForm()
-
-# 	return render(request, 'core/filter.html',{'form':fAtt})
-
-# def filterItems(request):
-
-# 	if request.method == 'POST':
-# 		filterAtt = request.POST['filters']
-# 		filter_qs = Item.objects.filter(category = filterAtt)
-# 		return render(request, 'core/menu.html', context = {'items' : filter_qs})
-# 	return render(request, 'core/filter.html')
-
 def filterItems(request):
 
 	if request.method == 'POST':
@@ -250,47 +173,6 @@ def filterItems(request):
 
 	return render(request, 'core/menu.html', context={'items' : Item.objects.all()})
 
-def nutriAnalysis(request):
-	url = "https://api.edamam.com/api/nutrition-details?app_id=313b0826&app_key=a7a53d7d3aa0ed966736ccad0312ebec"
-	 
-	data =	{
-			  "title": "Banana cookies",
-			  "ingr": [
-			    "1 cup rice",
-			    "400 g chicken",
-			  ]
-			}
-	r = requests.post(url, json=data) 
-	print(r.text)
-	return render(request,'core/menu.html')
-
-
-
-
-
-
-
-
-	# url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid=bca4a874f27d33fe4bd0dadd4d83ead6'
-	# #city = 'London'
-
-	# if request.method == 'POST':
-
-	# 		city = request.POST['cityName']
-	# 		r = requests.get(url.format(city)).json()
-	# 		print(r)
-	# 		if r['cod'] == 200:				
-	# 			city_weather = {
-	# 				'city': city,
-	# 				'temperature': r['main']['temp'],
-	# 				'description': r['weather'][0]['description'],
-	# 				'icon': r['weather'][0]['icon'],
-	# 			}
-	# 			return render(request, 'core/base.html',{'city_weather':city_weather})
-	# 		else:
-	# 			messages.info(request, "Please enter a valid city name")
-
-	# return render(request,'core/base.html')
 
 
 
