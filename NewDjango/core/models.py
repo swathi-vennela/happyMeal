@@ -56,6 +56,10 @@ class Item(models.Model):
         return reverse("core:remove-from-cart", kwargs={
             'slug': self.slug
         })
+    def get_review_item_url(self):
+        return reverse("core:add_review", kwargs={
+                'slug' : self.slug
+            })
 
 
 class OrderItem(models.Model):
@@ -101,3 +105,14 @@ class Order(models.Model):
         # if self.coupon:
         #     total -= self.coupon.amount
         return total
+
+class Review(models.Model):
+    item = models.ForeignKey(Item,on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    comment = models.TextField(max_length=1000)
+    rating = models.FloatField(default=0)
+    date = models.DateTimeField(auto_now = True) #date when the review is added for the first time
+    review_id = models.IntegerField(default= 0)
+
+    def __str__(self):
+        return self.user.username 

@@ -14,23 +14,64 @@
         <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
         {% endfor %}
   {% endif %}
-  <div class="container">
+    <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-4 col-lg-4 m-4">
               <div class="card">
-                <img src="{{object.image.url}}" class="card-img-top" alt="{{ product.name }}" height="300" width="300">
+                <img src="{{item.image.url}}" class="card-img-top" alt="{{ product.name }}" height="300" width="300">
                       <div class="card-body">
-                        <h5 class="card-title"> {{ object.title }}</h5>
-                        <p class="card-text">{{ object.price }}</p>
-                        <span class="badge purple mr-1"> {{object.category}} </span>
+                        <h5 class="card-title"> {{ item.title }}</h5>
+                        <p class="card-text">{{ item.price }}</p>
+                        <span class="badge purple mr-1"> {{item.category}} </span>
                       </div>
                   <div class='card-footer text-center'>
-                  <a href="{{ object.get_add_to_cart_url }}" class="btn btn-success">Add to Cart</a>
-                  <a href="{{ object.get_remove_from_cart_url }} " class="btn btn-danger">Remove from Cart</a>
+                  <a href="{{ item.get_add_to_cart_url }}" class="btn btn-success">Add to Cart</a>
+                  <a href="{{ item.get_remove_from_cart_url }} " class="btn btn-danger">Remove from Cart</a>
                   </div>
                </div>
         </div>
   </div>
+
+    <div class="card">
+    <div class="card-body">
+      <h3 class="text-center">Share your review..!!</h3>
+       <form action="{{ item.get_review_item_url }}" method="POST"> 
+        {% csrf_token %}
+        <label for="comment">Review</label>
+        <textarea name="comment" id="comment" cols="30" rows="5" class="form-control"></textarea>
+        <label for="rating">Rating</label>
+        <input type="text" name="rating" class="form-control">
+
+        <br>
+        <input type="submit" name="btn btn-danger" value="Add Review">
+      </form>
+
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="text-center">Reviews</h3>
+      {% for review in reviews %}
+        <div class="card" style="background-color: #f5eeee">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <h5 class="text-left"> {{ review.user.username }} </h5>
+                <h5> {{ review.rating }} </h5>
+                <a href=" {% url 'core:edit_review' item.slug review.review_id %} ">edit</a>
+              </div>
+              <div class="col-md-9">
+                <p> {{review.comment}} </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+      {% endfor %}
+    </div>
+  </div>
+
   </div>
 </body>
 </html>

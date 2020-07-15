@@ -7,11 +7,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Item, OrderItem, Order
+from .models import *
 from django.contrib.auth.models import User 
 from django.views.generic import ListView, View, DetailView, CreateView
 from django.utils import timezone
-from .forms import FilterForm
+from .forms import *
 import logging
 
 def menu(request):
@@ -84,9 +84,20 @@ class OrderSummaryView(LoginRequiredMixin, View):
 			messages.info(self.request, "You do not have an active order")
 			return redirect("core:menu")
 
-class ItemDetailView(DetailView):
-	model = Item
-	template_name = 'core/product.html'
+# class ItemDetailView(DetailView):
+# 	model = Item
+# 	template_name = 'core/product.html'
+
+def detail(request, slug):
+	item = Item.objects.get(slug=slug)
+	reviews = Review.objects.filter(item = item).order_by("-date")
+
+	context = {
+		"item" : item,
+		"reviews" : reviews
+	}
+	return render(request, 'core/product.html', context)
+
 
 @login_required
 def add_to_cart(request, slug):
@@ -173,10 +184,72 @@ def filterItems(request):
 
 	return render(request, 'core/menu.html', context={'items' : Item.objects.all()})
 
+def add_review(request, slug):
+    if request.user.is_authenticated:
+        item = Item.objects.get(slug = slug)
+        if request.method == "POST":
+        	form = ReviewForm(request.POST or None)
+        	if form.is_valid():
+        		data = form.save(commit = False)
+        		data.comment = request.POST["comment"]
+        		data.rating = request.POST["rating"]
+        		data.user = request.user 
+        		data.item = item 
+        		data.review_id = Review.objects.count()+1
+        		data.save()
+        		return redirect("core:product",slug)
+        else:
+        	form = ReviewForm()
+        return render(request, 'core/product.html',{"form":form})
+    else:
+    	return redirect("users:login")
 
+# def edit_review(request, slug, id):
+# 	if request.user.is_authenticated:
+# 		review = review.objects.get(review_id = id)
+# 		#checking if he is the author of the review
+# 		if(request.user == review.user):
+# 			#grant persission
+# 			if request.method == "POST":
+# 				form = ReviewForm(request.POST, instance=review)
+# 				if form.is_valid():
+# 					data = form.save(commit = False)
+# 					data.save() 
+# 					return redirect("core:product",slug)
+# 			else:
+# 				form = ReviewForm(instance=review)
+# 			return render(request, 'core/edit_review.html', {'form': form})
+# 		else:
+# 			return redirect("core:product", review.item.slug)
+# 	else:
+# 		return redirect("users:login")
 
+# edit the review
+def edit_review(request, slug, review_id):
+    if request.user.is_authenticated:
+        item = Item.objects.get(slug=slug)
+        # review
+        review = Review.objects.get(item=item, review_id=review_id)
 
-
+        # check if the review was done by the logged in user
+        if request.user == review.user:
+            # grant permission
+            if request.method == "POST":
+                form = ReviewForm(request.POST, instance=review)
+                if form.is_valid():
+                    data = form.save(commit=False)
+                    if (data.rating > 10) or (data.rating < 0):
+                         return render(request, 'core/edit_review.html', {"form": form})
+                    else:
+                        data.save()
+                        return redirect("core:product", slug)
+            else:
+                form = ReviewForm(instance=review)
+            return render(request, 'core/edit_review.html', {"form": form})
+        else:
+            return redirect("core:product", slug)
+    else:
+        return redirect("users:login")
 
 
 
