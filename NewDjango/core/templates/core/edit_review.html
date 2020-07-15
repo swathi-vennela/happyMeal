@@ -12,7 +12,9 @@
     <div >
         <form action="" method="POST">
                 {% csrf_token %}
-                
+                {% if error %}
+                  <strong style="color: red;"> {{error}} </strong>
+                {% endif %}
                 <fieldset class="form-group">
                     {{ form }}
                 </fieldset>

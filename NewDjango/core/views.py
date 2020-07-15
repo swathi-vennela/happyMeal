@@ -1,6 +1,6 @@
 import requests 
 from django.contrib import messages
-from django.db.models import Q 
+from django.db.models import Q, Avg
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
@@ -93,10 +93,15 @@ class OrderSummaryView(LoginRequiredMixin, View):
 def detail(request, slug):
 	item = Item.objects.get(slug=slug)
 	reviews = Review.objects.filter(item = item).order_by("-date")
-
+	average = reviews.aggregate(Avg("rating"))["rating__avg"]
+	if average == None:
+		average = 0
+	average = round(average,2)
+	item.averageRating = average
 	context = {
 		"item" : item,
-		"reviews" : reviews
+		"reviews" : reviews,
+		"average" : average,
 	}
 	return render(request, 'core/product.html', context)
 
@@ -222,7 +227,8 @@ def edit_review(request, slug, review_id):
                 if form.is_valid():
                     data = form.save(commit=False)
                     if (data.rating > 10) or (data.rating < 0):
-                         return render(request, 'core/edit_review.html', {"form": form})
+                    	 error = "Out of range. Please select a rating from 0 to 10"
+                    	 return render(request, 'core/edit_review.html', {"error":error ,"form": form})
                     else:
                         data.save()
                         return redirect("core:product", slug)
