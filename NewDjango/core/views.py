@@ -14,6 +14,8 @@ from django.utils import timezone
 from .forms import *
 import logging
 
+deleted_reviews = 0
+
 def menu(request):
 	if request.method == 'POST':
 		filterAtt = request.POST['filter1']
@@ -194,8 +196,9 @@ def add_review(request, slug):
         		data.comment = request.POST["comment"]
         		data.rating = request.POST["rating"]
         		data.user = request.user 
-        		data.item = item 
-        		data.review_id = Review.objects.count()+1
+        		data.item = item
+        		global delete_reviews  
+        		data.review_id = Review.objects.count()+ deleted_reviews +1
         		data.save()
         		return redirect("core:product",slug)
         else:
@@ -203,26 +206,6 @@ def add_review(request, slug):
         return render(request, 'core/product.html',{"form":form})
     else:
     	return redirect("users:login")
-
-# def edit_review(request, slug, id):
-# 	if request.user.is_authenticated:
-# 		review = review.objects.get(review_id = id)
-# 		#checking if he is the author of the review
-# 		if(request.user == review.user):
-# 			#grant persission
-# 			if request.method == "POST":
-# 				form = ReviewForm(request.POST, instance=review)
-# 				if form.is_valid():
-# 					data = form.save(commit = False)
-# 					data.save() 
-# 					return redirect("core:product",slug)
-# 			else:
-# 				form = ReviewForm(instance=review)
-# 			return render(request, 'core/edit_review.html', {'form': form})
-# 		else:
-# 			return redirect("core:product", review.item.slug)
-# 	else:
-# 		return redirect("users:login")
 
 # edit the review
 def edit_review(request, slug, review_id):
@@ -248,6 +231,25 @@ def edit_review(request, slug, review_id):
             return render(request, 'core/edit_review.html', {"form": form})
         else:
             return redirect("core:product", slug)
+    else:
+        return redirect("users:login")
+
+# delete the review
+def delete_review(request, slug, review_id):
+    if request.user.is_authenticated:
+        item = Item.objects.get(slug=slug)
+        # review
+        review = Review.objects.get(item=item, review_id=review_id)
+
+        # check if the review was done by the logged in user
+        if request.user == review.user:
+            # grant permission to delete
+            review.delete()
+            global deleted_reviews 
+            deleted_reviews = deleted_reviews+1
+
+
+        return redirect("core:product", slug)
     else:
         return redirect("users:login")
 

@@ -11,6 +11,7 @@ from .views import(
         search,
         add_review,
         edit_review,
+        delete_review,
         detail,
     )
 from . import views
@@ -29,5 +30,6 @@ urlpatterns = [
     path('remove-from-cart/<slug>/',remove_from_cart, name='remove-from-cart'),
     path('remove-item-from-cart/<slug>/',remove_single_item_from_cart, name='remove-single-item-from-cart'),
     path('addreview/<slug>/', views.add_review, name='add_review'),
-    path('editreview/<slug>/<review_id>',views.edit_review, name='edit_review'),
+    path('edit_review/<slug>/<review_id>',views.edit_review, name='edit_review'),
+    path('delete_review/<slug>/<review_id>',views.delete_review, name='delete_review'),
 ]
