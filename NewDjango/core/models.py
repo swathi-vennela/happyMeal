@@ -3,24 +3,11 @@ from django.conf import settings
 from PIL import Image
 from django.urls import reverse
 
-CATEGORY_CHOICES = (
-    ('C', 'Carbs'),
-    ('P', 'Proteins'),
-    ('F', 'Fats')
-)
-
-LABEL_CHOICES = (
-    ('P', 'primary'),
-    ('S', 'secondary'),
-    ('D', 'danger')
-)
-
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
-    label = models.CharField(choices=LABEL_CHOICES, max_length=1)
+    calories = models.FloatField(default=0)
     slug = models.SlugField(unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to='item_pics')
