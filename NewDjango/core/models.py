@@ -4,6 +4,7 @@ from PIL import Image
 from django.urls import reverse
 
 class Item(models.Model):
+    chef = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)

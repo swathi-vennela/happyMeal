@@ -82,13 +82,6 @@
       {% csrf_token %}
       <label for="filters">Choose a filter:</label>
 
-      <select id="filter1" name="filter1" onchange="this.form.submit()">
-      <option selected="selected"> Nutrient </option>
-      <option value="C">Carbohydrates</option>
-      <option value="P">Proteins</option>
-      <option value="F">Fats</option>
-       </select>
-
       <select id="filter2" name="filter2" onchange="this.form.submit()" > 
         <option selected="selected"> Price </option>
         <option value="lte100">below 100</option>
