@@ -19,6 +19,17 @@ deleted_reviews = 0
 
 def menu(request):
 	if request.method == 'POST':
+
+		filterAtt = request.POST['filter1']
+		if filterAtt:
+			if filterAtt == "veg":
+				filter_qs = Item.objects.filter(is_veg=True)
+				return render(request, 'core/menu.html',context={'items' : filter_qs})
+			elif filterAtt == "nonveg":
+				filter_qs = Item.objects.filter(is_veg=False)
+				return render(request, 'core/menu.html',context={'items' : filter_qs})
+
+
 		filterAtt = request.POST['filter2']
 		if filterAtt:
 			if filterAtt == "lte100":
