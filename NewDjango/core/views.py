@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.views.generic import ListView, View, DetailView, CreateView
 from django.utils import timezone
 from .forms import *
+from users.decorators import *
 import logging
 
 deleted_reviews = 0
@@ -64,9 +65,23 @@ def search(request):
 
 	return render(request, 'core/menu.html', context={'items': list(set(query_set))})
 
-class ItemCreateView(CreateView):
-	model = Item
-	fields = ['title','price','discount_price','category','slug','description','image']
+# class ItemCreateView(CreateView):
+# 	model = Item
+# 	fields = ['title','price','discount_price','category','slug','description','image']
+
+@store_required
+def create_item(request):
+	if request.method == "POST":
+		form = ItemForm(request.POST, request.FILES)
+
+		if form.is_valid():
+			data = form.save(commit=False)
+			data.save()
+			return redirect("core:menu")
+	else:
+		form = ItemForm()
+	return render(request, 'core/item_form.html',{"form":form})
+
 
 class ItemListView(ListView):
 	model = Item
