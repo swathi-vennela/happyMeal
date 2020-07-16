@@ -12,4 +12,4 @@ class ReviewForm(forms.ModelForm):
 class ItemForm(forms.ModelForm):
 	class Meta:
 		model = Item 
-		fields = ("title","price","discount_price","description","slug","calories","image")
+		fields = ("title","price","discount_price","is_veg" ,"description","slug","calories","image")

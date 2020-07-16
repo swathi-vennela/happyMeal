@@ -82,6 +82,12 @@
       {% csrf_token %}
       <label for="filters">Choose a filter:</label>
 
+      <select id="filter1" name="filter1" onchange="this.form.submit()">
+        <option selected="selected"> Veg / NonVeg </option>
+        <option value="veg">Veg</option>
+        <option value="nonveg">Non-veg</option>
+      </select>
+
       <select id="filter2" name="filter2" onchange="this.form.submit()" > 
         <option selected="selected"> Price </option>
         <option value="lte100">below 100</option>
@@ -98,7 +104,7 @@
     </form>
 
   <form method="GET" action="{% url 'core:search' %}">
-    <input name="q" value="{{request.GET.q}}" placeholder="search..">
+    <input name="q" value="{{request.GET.q}}" placeholder="search for an item">
     <button class="btn btn-success" type="submit">
       Search
     </button>
