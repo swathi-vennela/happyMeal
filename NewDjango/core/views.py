@@ -19,12 +19,6 @@ deleted_reviews = 0
 
 def menu(request):
 	if request.method == 'POST':
-		filterAtt = request.POST['filter1']
-		if filterAtt:
-			filter_qs = Item.objects.filter(category=filterAtt)
-			if filter_qs:
-				return render(request, 'core/menu.html',context={'items' : filter_qs})
-
 		filterAtt = request.POST['filter2']
 		if filterAtt:
 			if filterAtt == "lte100":
@@ -76,6 +70,7 @@ def create_item(request):
 
 		if form.is_valid():
 			data = form.save(commit=False)
+			data.chef = request.user 
 			data.save()
 			return redirect("core:menu")
 	else:
