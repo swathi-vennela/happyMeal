@@ -1,19 +1,20 @@
 from django.urls import path
-from .views import(
-        menu,
-        ItemListView,
-        ItemCreateView,
-        add_to_cart,
-        remove_from_cart,
-        remove_single_item_from_cart,
-        OrderSummaryView,
-        filterItems,
-        search,
-        add_review,
-        edit_review,
-        delete_review,
-        detail,
-    )
+# from .views import(
+#         menu,
+#         ItemListView,
+#         ItemCreateView,
+#         add_to_cart,
+#         remove_from_cart,
+#         remove_single_item_from_cart,
+#         OrderSummaryView,
+#         filterItems,
+#         search,
+#         add_review,
+#         edit_review,
+#         delete_review,
+#         detail,
+#     )
+from .views import *
 from . import views
 
 app_name = 'core'
@@ -24,7 +25,8 @@ urlpatterns = [
     path('search/', search, name='search'),
     # path('product/<slug>/', ItemDetailView.as_view(), name='product'),
     path('product/<slug>', detail, name='product'),
-    path('item/new/', ItemCreateView.as_view(), name='product-create'),
+    # path('item/new/', ItemCreateView.as_view(), name='product-create'),
+    path('item/new/', create_item, name='product-create'),
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
     path('add-to-cart/<slug>/',add_to_cart, name='add-to-cart'),
     path('remove-from-cart/<slug>/',remove_from_cart, name='remove-from-cart'),
