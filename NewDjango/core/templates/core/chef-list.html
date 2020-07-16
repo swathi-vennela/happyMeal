@@ -46,8 +46,28 @@
 
 </div>
 
-
-<p class="tagline">Relish your every meal with a blend of nutrients..</p>
+<br> <br> <br> <br>
+<div class="card">
+    <div class="card-body">
+      <h3 class="text-center">Our top chefs</h3>
+      {% for chef in chefs %}
+        <div class="card" style="background-color: #f5eeee">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <h5 class="text-left"> User name: {{ chef.username }} </h5>
+                <h5> Chef's Name: {{chef.first_name}} {{chef.last_name}} </h5>
+              </div>
+              <div class="col-md-9">
+                <p> Bio: Hey there! I'm {{chef.username}} </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br> <br>
+      {% endfor %}
+    </div>
+  </div>
 
 
 <div >

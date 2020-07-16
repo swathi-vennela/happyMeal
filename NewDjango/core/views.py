@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import *
 from django.contrib.auth.models import User 
+from users.models import User as AbsUser
 from django.views.generic import ListView, View, DetailView, CreateView
 from django.utils import timezone
 from .forms import *
@@ -53,7 +54,6 @@ def menu(request):
 
 	return render(request, 'core/menu.html', context={'items' : Item.objects.all()})
 
-
 def search(request):
 	template = 'core/menu.html'
 	query_set = []
@@ -70,9 +70,10 @@ def search(request):
 
 	return render(request, 'core/menu.html', context={'items': list(set(query_set))})
 
-# class ItemCreateView(CreateView):
-# 	model = Item
-# 	fields = ['title','price','discount_price','category','slug','description','image']
+def chef_list(request):
+	chefs = AbsUser.objects.filter(is_store_owner=True)
+	return render(request, 'core/chef-list.html',context={'chefs':chefs})
+
 
 @store_required
 def create_item(request):
