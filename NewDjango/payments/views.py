@@ -5,8 +5,7 @@ from django.conf import settings
 from .models import Transaction
 from .paytm import generate_checksum, verify_checksum
 from core.models import Order;
-from django_currentuser.middleware import (
-    get_current_user, get_current_authenticated_user)
+
 global user
 
 def initiate_payment(request):
