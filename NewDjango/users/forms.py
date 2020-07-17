@@ -55,10 +55,6 @@ class SignupForm(UserCreationForm):
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     is_student = False
     is_store_owner = False
-    college = forms.CharField(
-        max_length=13,
-        widget=forms.TextInput(attrs={'placeholder': 'College Name'})
-    )
 
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'})
                                  )
@@ -74,7 +70,7 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
 
-        fields = ['username', 'email', 'first_name', 'college', 'last_name', 'password1', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
 
 
 class UserUpdateForm(forms.ModelForm):

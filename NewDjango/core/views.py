@@ -1,26 +1,35 @@
 import requests 
 from django.contrib import messages
-from django.db.models import Q 
+from django.db.models import Q, Avg
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Item, OrderItem, Order
+from .models import *
 from django.contrib.auth.models import User 
+from users.models import User as AbsUser
 from django.views.generic import ListView, View, DetailView, CreateView
 from django.utils import timezone
-from .forms import FilterForm
+from .forms import *
+from users.decorators import *
 import logging
+
+deleted_reviews = 0
 
 def menu(request):
 	if request.method == 'POST':
+
 		filterAtt = request.POST['filter1']
 		if filterAtt:
-			filter_qs = Item.objects.filter(category=filterAtt)
-			if filter_qs:
+			if filterAtt == "veg":
+				filter_qs = Item.objects.filter(is_veg=True)
 				return render(request, 'core/menu.html',context={'items' : filter_qs})
+			elif filterAtt == "nonveg":
+				filter_qs = Item.objects.filter(is_veg=False)
+				return render(request, 'core/menu.html',context={'items' : filter_qs})
+
 
 		filterAtt = request.POST['filter2']
 		if filterAtt:
@@ -45,7 +54,6 @@ def menu(request):
 
 	return render(request, 'core/menu.html', context={'items' : Item.objects.all()})
 
-
 def search(request):
 	template = 'core/menu.html'
 	query_set = []
@@ -62,9 +70,25 @@ def search(request):
 
 	return render(request, 'core/menu.html', context={'items': list(set(query_set))})
 
-class ItemCreateView(CreateView):
-	model = Item
-	fields = ['title','price','discount_price','category','slug','description','image']
+def chef_list(request):
+	chefs = AbsUser.objects.filter(is_store_owner=True)
+	return render(request, 'core/chef-list.html',context={'chefs':chefs})
+
+
+@store_required
+def create_item(request):
+	if request.method == "POST":
+		form = ItemForm(request.POST, request.FILES)
+
+		if form.is_valid():
+			data = form.save(commit=False)
+			data.chef = request.user 
+			data.save()
+			return redirect("core:menu")
+	else:
+		form = ItemForm()
+	return render(request, 'core/item_form.html',{"form":form})
+
 
 class ItemListView(ListView):
 	model = Item
@@ -84,9 +108,25 @@ class OrderSummaryView(LoginRequiredMixin, View):
 			messages.info(self.request, "You do not have an active order")
 			return redirect("core:menu")
 
-class ItemDetailView(DetailView):
-	model = Item
-	template_name = 'core/product.html'
+# class ItemDetailView(DetailView):
+# 	model = Item
+# 	template_name = 'core/product.html'
+
+def detail(request, slug):
+	item = Item.objects.get(slug=slug)
+	reviews = Review.objects.filter(item = item).order_by("-date")
+	average = reviews.aggregate(Avg("rating"))["rating__avg"]
+	if average == None:
+		average = 0
+	average = round(average,2)
+	item.averageRating = average
+	context = {
+		"item" : item,
+		"reviews" : reviews,
+		"average" : average,
+	}
+	return render(request, 'core/product.html', context)
+
 
 @login_required
 def add_to_cart(request, slug):
@@ -173,10 +213,77 @@ def filterItems(request):
 
 	return render(request, 'core/menu.html', context={'items' : Item.objects.all()})
 
+def add_review(request, slug):
+    if request.user.is_authenticated:
+        item = Item.objects.get(slug = slug)
+        review_qs = Review.objects.filter(item= item, user= request.user)
+        if review_qs:
+        	error = "Can't add more than one review for the same item.. Edit your review..!!"
+        	return redirect("core:product", slug)
+        elif (request.method == "POST") and (not review_qs):
+        	form = ReviewForm(request.POST or None)
+        	if form.is_valid():
+        		data = form.save(commit = False)
+        		data.comment = request.POST["comment"]
+        		data.rating = request.POST["rating"]
+        		data.user = request.user 
+        		data.item = item
+        		global delete_reviews  
+        		data.review_id = Review.objects.count()+ deleted_reviews +1
+        		data.save()
+        		return redirect("core:product",slug)
+        else:
+        	form = ReviewForm()
+        return render(request, 'core/product.html',{"error":error,"form":form})
+    else:
+    	return redirect("users:login")
+
+# edit the review
+def edit_review(request, slug, review_id):
+    if request.user.is_authenticated:
+        item = Item.objects.get(slug=slug)
+        # review
+        review = Review.objects.get(item=item, review_id=review_id)
+
+        # check if the review was done by the logged in user
+        if request.user == review.user:
+            # grant permission
+            if request.method == "POST":
+                form = ReviewForm(request.POST, instance=review)
+                if form.is_valid():
+                    data = form.save(commit=False)
+                    if (data.rating > 10) or (data.rating < 0):
+                    	 error = "Out of range. Please select a rating from 0 to 10"
+                    	 return render(request, 'core/edit_review.html', {"error":error ,"form": form})
+                    else:
+                        data.save()
+                        return redirect("core:product", slug)
+            else:
+                form = ReviewForm(instance=review)
+            return render(request, 'core/edit_review.html', {"form": form})
+        else:
+            return redirect("core:product", slug)
+    else:
+        return redirect("users:login")
+
+# delete the review
+def delete_review(request, slug, review_id):
+    if request.user.is_authenticated:
+        item = Item.objects.get(slug=slug)
+        # review
+        review = Review.objects.get(item=item, review_id=review_id)
+
+        # check if the review was done by the logged in user
+        if request.user == review.user:
+            # grant permission to delete
+            review.delete()
+            global deleted_reviews 
+            deleted_reviews = deleted_reviews+1
 
 
-
-
+        return redirect("core:product", slug)
+    else:
+        return redirect("users:login")
 
 
 

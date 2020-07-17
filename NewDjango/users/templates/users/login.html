@@ -44,7 +44,7 @@
 <div >
 
 
-        <form class="form"  method="POST">
+        <form class="form"  method="POST" action="{% url 'users:login' %}">
             {% csrf_token %}
 
             {{ form.errors}}
