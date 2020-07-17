@@ -216,7 +216,11 @@ def filterItems(request):
 def add_review(request, slug):
     if request.user.is_authenticated:
         item = Item.objects.get(slug = slug)
-        if request.method == "POST":
+        review_qs = Review.objects.filter(item= item, user= request.user)
+        if review_qs:
+        	error = "Can't add more than one review for the same item.. Edit your review..!!"
+        	return redirect("core:product", slug)
+        elif (request.method == "POST") and (not review_qs):
         	form = ReviewForm(request.POST or None)
         	if form.is_valid():
         		data = form.save(commit = False)
@@ -230,7 +234,7 @@ def add_review(request, slug):
         		return redirect("core:product",slug)
         else:
         	form = ReviewForm()
-        return render(request, 'core/product.html',{"form":form})
+        return render(request, 'core/product.html',{"error":error,"form":form})
     else:
     	return redirect("users:login")
 
