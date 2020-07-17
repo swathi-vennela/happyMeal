@@ -3,16 +3,24 @@ from django.conf import settings
 from PIL import Image
 from django.urls import reverse
 
+STATUS_CHOICES = (
+    ('O', 'Order Request Accepted'),
+    ('C', 'Cooking'),
+    ('D', 'Deliverd')
+)
+
 class Item(models.Model):
     chef = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     is_veg = models.BooleanField(default=True)
+    # status = models.CharField(choices=STATUS_CHOICES, max_length=1)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     calories = models.FloatField(default=0)
     slug = models.SlugField(unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to='item_pics')
+
 
     def __str__(self):
         return self.title
@@ -74,6 +82,9 @@ class OrderItem(models.Model):
     	if self.item.discount_price:
     		return self.get_total_discount_item_price()
     	return self.get_total_item_price()
+    def set_change_order_status(self):
+        self.ordered = True
+        super().save()
 
 
 
@@ -89,11 +100,15 @@ class Order(models.Model):
 
     def get_total(self):
         total = 0
-        for order_item in self.items.all():
+        for order_item in self.items.filter(ordered=False).all():
             total += order_item.get_final_price()
         # if self.coupon:
         #     total -= self.coupon.amount
         return total
+    def set_change_order_status(self):
+        self.ordered = True
+        super().save()
+
 
 class Review(models.Model):
     item = models.ForeignKey(Item,on_delete=models.CASCADE)

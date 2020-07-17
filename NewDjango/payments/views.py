@@ -5,7 +5,9 @@ from django.conf import settings
 from .models import Transaction
 from .paytm import generate_checksum, verify_checksum
 from core.models import Order;
-
+from django_currentuser.middleware import (
+    get_current_user, get_current_authenticated_user)
+global user
 
 def initiate_payment(request):
     if request.method == "GET":
@@ -13,6 +15,8 @@ def initiate_payment(request):
     # try:
     # username = request.POST['username']
     # password = request.POST['password']
+    global user 
+    user = request.user
     amount = Order.objects.get(user=request.user, ordered=False).get_total();
     #     user = authenticate(request, username=username, password=password)
     #     if user is None:
@@ -59,6 +63,8 @@ def callback(request):
         received_data = dict(request.POST)
         print(received_data)
         paytm_params = {}
+        global user
+        order = Order.objects.get(user=user, ordered=False)
         paytm_checksum = received_data['CHECKSUMHASH'][0]
         for key, value in received_data.items():
             if key == 'CHECKSUMHASH':
@@ -70,6 +76,8 @@ def callback(request):
         if is_valid_checksum:
             print("Checksum Matched")
             received_data['message'] = "Checksum Matched"
+            for order_item in order.items.filter(ordered = False).all():
+                order_item.set_change_order_status()
 
         else:
             print("Checksum Mismatched")

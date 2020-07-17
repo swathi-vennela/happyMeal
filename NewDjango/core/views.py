@@ -100,13 +100,18 @@ class OrderSummaryView(LoginRequiredMixin, View):
 	def get(self, *args, **kwargs):
 		try:
 			order = Order.objects.get(user=self.request.user, ordered=False)
+			order1 = Order.objects.get(user=self.request.user, ordered=False).items.filter(user=self.request.user,ordered=False).all()
+			order2 = Order.objects.get(user=self.request.user, ordered=False).items.filter(user=self.request.user,ordered=True).all()
 			context = {
-				'object' : order
+				'object' : order,
+				'object1' : order1,
+				'object2' : order2
 			}
 			return render(self.request, 'core/order_summary.html', context)
 		except ObjectDoesNotExist:
 			messages.info(self.request, "You do not have an active order")
 			return redirect("core:menu")
+
 
 # class ItemDetailView(DetailView):
 # 	model = Item
@@ -136,7 +141,7 @@ def add_to_cart(request, slug):
 	if order_qs.exists():
 		order = order_qs[0]
 		#check if the order item is in the order
-		if order.items.filter(item__slug=item.slug).exists():
+		if order.items.filter(item__slug=item.slug, ordered = False).exists():
 			order_item.quantity += 1
 			order_item.save()
 			messages.info(request, "This item quantity was updated.")
