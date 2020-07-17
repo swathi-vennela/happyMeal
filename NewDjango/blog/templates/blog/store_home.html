@@ -1,75 +1,56 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Store</title>
-</head>
-<body>
-    Hii! This is Store Home Page
-</body>
-</html>
- -->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Healthy Meal</title>
-    <link rel = "icon" href ="{% static 'blog/images/Asset 18.png' %}" type = "image/x-icon">
-    <link rel="stylesheet" href="{% static 'blog/home.css' %}">
+<html lang="en">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/home.css' %}">
+    <title>Healthy Meal - Home</title>
+</head>
 
-  </head>
-  <body>
-  This is store home page!!
+<body>
+    <img src="{%static 'blog/images/Asset 66@2x.png' %}" class="firstbg">
 
-<div >
+    <div class="grid-container1 gc">
 
-  <a href="{% url 'home' %}"> <img class="home" src="{% static 'blog/images/Asset 18.png' %}" alt="home"> </a>
+        <div class="item1">
 
-</div>
+            
+        </div>
+        <div class="item2">
+            <div class="logo">
+                <img src="{%static 'blog/images/Asset 64@2x.png' %}" class="logo_img">
+            </div>
+            <div class="nav">
+                <ul>
+                    <li><a class="active" href="{% url 'home ">Home</a></li>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'contact' %} ">Contact Us</a></li>
+                    <li><a href="{% url 'core:menu' %}">Meals</a></li>
+                </ul>
+            </div>
+            <div class="sign">
+                <a href=" {% url 'users:login' %} ">Login</a>
+            </div>
+        </div>
+        <div class="item3">
+            <div class="heading">
+                Relish Your Every Meal<br>
+                With A Blend Of Nutrients...
+            </div>
+            <div class="subheading">
+                Feeling Hungry?
+            </div>
+            <div class="button">
+                <a href="{% url 'core:menu' %} ">Order Now</a>
+            </div>
+        </div>
+        <div class="item4">
+            <img src="{% static 'blog/images/Asset 65@2x.png' %}">
+            <img src="{%static  'blog/images/Asset 56@2x.png' %}" class="food">
+        </div>
+    </div>
+</body>
 
-
-<div  class="navigation">
-
-    <ul >
-      <li><a href="{% url 'home' %}">Home</a></li>
-      <li><a href="{% url 'core:menu' %}">Menu</a></li>
-<!--       <li><a href="{% url 'users:login' %}">Login</a></li>
-      <li><a href="{% url 'users:signup' %}">Register</a></li> -->
-      {% if user.is_authenticated %}
-                <li><a  href=" {% url 'users:logout' %} ">Logout   </a></li>
-                <li><a  href=" {% url 'core:order-summary' %} ">Cart  </a></li>
-                <li><a  href="{% url 'users:profile' %} ">Profile  </a></li>
-                <li><a href="{% url 'core:product-create' %}"> Sell</a></li>
-
-      {% else %}
-
-                <li><a href=" {% url 'users:login' %} ">Login</a></li>
-                <li><a href=" filter/{% url 'users:signup' %} ">Register</a></li>
-
-      {% endif %}
-    </ul>
-
-</div>
-
-
-<p class="tagline">Relish your every meal with a blend of nutrients..</p>
-
-
-<div >
-  <img class="rightbase" src="{% static 'blog/images/Asset 20.png' %}" alt="rightbase">
-  <img class="greenbase" src="{% static 'blog/images/Asset 19.png' %}" alt="greenbase">
-  <img class="dish" src="{% static 'blog/images/Asset 6.png' %}" alt="dish">
-
-</div>
-
-
-
-
-
-  </body>
 </html>
-
-

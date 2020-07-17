@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Healthy Meal</title>
+    <link rel = "icon" href ="{% static 'blog/images/Asset 18.png' %}" type = "image/x-icon">
+    <link rel="stylesheet" href="{% static 'blog/home.css' %}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+  <body>
+
+
+<div >
+
+  <a href="{% url 'home' %}"> <img class="home" src="{% static 'blog/images/Asset 18.png' %}" alt="home"> </a>
+
+</div>
+
+
+<div  class="navigation">
+
+    <ul >
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'about' %}">About Us</a></li>
+      <li><a href="{% url 'core:menu' %}">Menu</a></li>
+      <li><a href="{% url 'contact' %}">Contact Us</a></li>
+      <li><a href="{% url 'core:chef-list' %}">Our Chefs</a></li>
+<!--       <li><a href="{% url 'users:login' %}">Login</a></li>
+      <li><a href="{% url 'users:signup' %}">Register</a></li> -->
+      {% if user.is_authenticated %}
+                <li><a  href=" {% url 'users:logout' %} ">Logout   </a></li>
+                <li><a  href=" {% url 'core:order-summary' %} ">Cart  </a></li>
+                <li><a  href="{% url 'users:profile' %} ">Profile  </a></li>
+                <li><a href="{% url 'core:product-create' %}"> Sell</a></li>
+
+      {% else %}
+
+                <li><a href=" {% url 'users:login' %} ">Login</a></li>
+                <li><a href=" {% url 'users:signup' %} ">Register</a></li>
+
+      {% endif %}
+    </ul>
+
+</div>
+
+
+<p class="tagline">Relish your every meal with a blend of nutrients..</p>
+
+
+<div >
+  <img class="rightbase" src="{% static 'blog/images/Asset 20.png' %}" alt="rightbase">
+  <img class="greenbase" src="{% static 'blog/images/Asset 19.png' %}" alt="greenbase">
+  <img class="dish" src="{% static 'blog/images/Asset 6.png' %}" alt="dish">
+
+</div>
+
+
+
+
+
+  </body>
+</html>
+
+
