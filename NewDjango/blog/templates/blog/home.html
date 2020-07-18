@@ -24,14 +24,22 @@
             </div>
             <div class="nav">
                 <ul>
-                    <li><a class="active" href="{% url 'home ">Home</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'about' %}">About Us</a></li>
                     <li><a href="{% url 'contact' %} ">Contact Us</a></li>
                     <li><a href="{% url 'core:menu' %}">Meals</a></li>
+
                 </ul>
             </div>
-            <div class="sign">
-                <a href=" {% url 'users:login' %} ">Login</a>
+            <div class="nav">
+                    {% if user.is_authenticated %}
+                        <li><a href=" {% url 'users:logout' %} ">Logout</a></li>    
+                    {% else %}
+                    <ul>
+                        <li><a href=" {% url 'users:login' %} ">Login</a></li>
+                        <li><a href=" {% url 'users:signup' %} ">Signup</a></li>
+                    </ul>
+                    {% endif %}
             </div>
         </div>
         <div class="item3">
