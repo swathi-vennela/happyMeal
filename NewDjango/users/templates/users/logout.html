@@ -1,9 +1,63 @@
-{% extends "blog/base.html" %}
-{% block content %}
-    <h2>You have been logged out</h2>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            <a href="{% url 'users:login' %}">Log In Again</a>
-        </small>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/home.css' %}">
+    <title>Healthy Meal - Home</title>
+</head>
+
+<body>
+    <img src="{%static 'blog/images/Asset 66@2x.png' %}" class="firstbg">
+
+    <div class="grid-container1 gc">
+
+        <div class="item1">
+
+            
+        </div>
+        <div class="item2">
+            <div class="logo">
+                <img src="{%static 'blog/images/Asset 64@2x.png' %}" class="logo_img">
+            </div>
+            <div class="nav">
+                <ul>
+                    <li><a class="active" href="{% url 'home' %} ">Home</a></li>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'contact' %} ">Contact Us</a></li>
+                    <li><a href="{% url 'core:menu' %}">Meals</a></li>
+                </ul>
+            </div>
+            <div class="nav">
+                {% if user.is_authenticated %}
+                    <li><a href=" {% url 'users:logout' %} ">Logout</a></li>    
+                {% else %}
+                <ul>
+                    <li><a href=" {% url 'users:login' %} ">Login</a></li>
+                    <li><a href=" {% url 'users:signup' %} ">Signup</a></li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="item3">
+            <div class="heading">
+                Relish Your Every Meal<br>
+                With A Blend Of Nutrients...
+            </div>
+            <div class="subheading">
+                Feeling Hungry?
+            </div>
+            <div class="button">
+                <a href="{% url 'core:menu' %} ">Order Now</a>
+            </div>
+        </div>
+        <div class="item4">
+            <img src="{% static 'blog/images/Asset 65@2x.png' %}">
+            <img src="{%static  'blog/images/Asset 56@2x.png' %}" class="food">
+        </div>
     </div>
-{% endblock content %}
+</body>
+
+</html>

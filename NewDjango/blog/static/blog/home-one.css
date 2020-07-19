@@ -1,0 +1,256 @@
+body{
+margin: 0;
+padding:0;
+background-color: white;
+transition: 1s;
+}
+
+
+
+
+@media only screen and (max-width: 800px) {
+  body {
+    background-color: black;
+    transition: 1s;
+
+  }
+
+  .rightbase{
+
+    width: 480px;
+  }
+
+  .greenbase{
+
+    width:auto;
+  }
+  .dish{
+
+    width:auto;
+  }
+
+
+
+}
+
+@keyframes dish {
+  0%{
+    transform: rotate(0deg);
+
+  }
+
+  30%{
+    transform: rotate(10deg);
+  }
+
+  60%{
+    transform: rotate(15deg);
+  }
+
+  90%{
+    transform: rotate(20deg);
+  }
+
+
+
+}
+
+
+@keyframes rightbase {
+
+    0%{
+transform: translateX(0px);
+
+    }
+
+    50%{
+      transform: translateX(-5px);
+    }
+
+    100%{
+    transform: translateX(-10px);
+
+    }
+
+
+
+}
+
+
+
+
+
+
+@keyframes greenbase {
+  0%{
+    transform: rotate(-15deg);
+
+  }
+
+  30%{
+    transform: rotate(-13deg);
+  }
+
+  60%{
+    transform: rotate(-10deg);
+  }
+
+  90%{
+    transform: rotate(0deg);
+  }
+
+  0%{
+    opacity: 0;
+  }
+
+  50%{
+    opacity: 50;
+  }
+
+  100%{
+    opacity: 100;
+  }
+
+
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+}
+
+.navigation{
+margin:0;
+padding: 0;
+flex:1;
+
+
+
+
+transition: 3s;
+}
+
+.navigation ul li {
+margin:0 10px;
+padding: 0;
+
+list-style: none;
+display: inline-block;
+text-align: center;
+
+
+
+}
+
+
+.navigation ul li a {
+
+  color: green;
+  text-decoration: none;
+
+}
+
+
+.home{
+float:left;
+margin: 0;
+padding: 20px;
+width:200px;
+height: 80px;
+position: relative;
+top:10%;
+left:6%;
+transition: 1s;
+}
+
+
+
+.tagline{
+
+  font-family: cursive;
+  font-size: 20px;
+  position:absolute;
+  top:40%;
+  left:5%;
+  transition: 0.25s;
+  font-style: italic;
+font-weight: bold;
+
+}
+
+.tagline:hover{
+
+font-size: 21px;
+transition: 0.25s;
+
+
+}
+
+
+
+
+
+.rightbase{
+  margin: 0;
+  padding: 0;
+  width: 65%;
+  height:800px;
+  position: absolute;
+  top:0%;
+  right:-19.5%;
+
+  transition: 1s;
+  animation: rightbase 2s ease-out;
+}
+
+
+.rightbase:hover{
+  transition: 1s;
+transform: translateX(8px);
+}
+
+
+
+
+.greenbase{
+
+
+  position: absolute;
+  top:30.5%;
+  left:62%;
+  height: 500px;
+  width: 500px;
+  z-index: 1;
+  transition: 1s;
+  animation: greenbase 2s ease-out;
+}
+
+
+.greenbase:hover{
+  transition: 1s;
+transform: rotate(10deg);
+
+}
+
+.dish {
+
+
+  position: absolute;
+  top:33.5%;
+  left:63.5%;
+  height: 450px;
+  width: 450px;
+  z-index: 1;
+
+  transition: 0.70s;
+
+animation: dish 2s ease-out;
+
+ }
+
+
+
+.dish:hover {
+  transition: 0.70s;
+
+    transform: rotate(10deg);
+}

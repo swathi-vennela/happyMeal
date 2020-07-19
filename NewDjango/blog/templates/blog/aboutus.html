@@ -1,29 +1,118 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>About Us</title>
-    <link rel="stylesheet" href="{% static 'blog/aboutus.css' %}">
-  </head>
-  <body>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/about.css' %}">
+    <title>Healthy Meal - About</title>
+</head>
 
+<body>
+    <div class="grid-container1 gc">
 
-    <div class="">
+        <div class="item1">
 
-      <p>Who we are?</p>
+        </div>
+        <div class="item2">
+            <div class="logo">
+                <img src="{% static 'blog/images/Asset 169@2x.png' %}" class="logo_img">
+            </div>
+            <div class="nav">
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="{% url 'core:menu' %}">Meals</a></li>
+                </ul>
+            </div>
+            <div class="sign">
+                <a href="#">Login</a>
+            </div>
+        </div>
+        <div class="item3">
+            <div class="what">
+                <img src="{% static 'blog/images/Asset 201@2x.png' %}"><br>
+                Today's youth make the future of our nation.. They have the bubbling enthusiasm which if regulated and utilized the right way, can lead the nation to the zenith.. They are the ones who embody the future of the nation.. Therefore, if we want to ensure a bright future of our country, we first need to strengthen and empower our youth.. However, it is worth to note that the hectic lifestyles of teens and loss of apetitte does affect their physical as well as mental well being.. Too often, they get caught up in the hustle and bustle of life, trying to fulfill their dreams, follow their passion and build their career.. Not to mention, the students living in the hostels, away from their home, to fulfill their career goals are deprived of nutrients in the food they eat.. They crave for a healthy meal enriched with nutrients.. They yearn to relish their every meal with a blend of nutrients.. After all, the goal of any person is to "live to the fullest" and make the best of himself which can happen only when he is healthy.. Therefore, WE aim at fulfilling the nutritional requirements of students living in the hostels by helping them pave their way towards a healthy appetite.. Our motto is simple: Eat right, stay bright.. To make it simple, we let the teens enjoy the taste of eating right and let a healthy future begin now!
+            </div>
+        </div>
+    </div>
+    <div class="grid-container2 gc">
 
+        <div class="item4">
 
-        <img class="aman" src="{% static 'blog/images/Asset 17@2x Cropped.png' %}" alt="Aman">
-        <img class="nithin" src="{% static 'blog/images/Asset 14@2x Cropped.png' %}" alt="Nithin">
-        <img class="swathi" src="{% static 'blog/images/Asset 13@2x Cropped.png' %}" alt="Swathi"><br>
-        <img class="midhun" src="{% static 'blog/images/Asset 16@2x Cropped.png' %}" alt="Midhun">
-        <img class="nikhil" src="{% static 'blog/images/Asset 15@2x Cropped.png' %}" alt="Nikhil">
+        </div>
+        <div class="item5">
+
+        </div>
+        <div class="item6">
+            <div class="how">
+                <img src="{% static 'blog/images/Asset 401@2x.png' %}"><br>
+                We work with universities, Institutes and colleges that have partnered with us and set up an office within the college premises so that students can order food online whenever they wish to and get a healthy meal, prepared fresh, ready to eat in minutes. We got the best chefs from our country who have the expertise to feed your cravings with deliciously real food. This is how we make nutrition and taste finally put away their differences, coz we serve the food that can wake up your taste buds with the flavors of nature..Your instant need to eat is served with a broad menu, blending everything from tender meats to earthy fruits and veggies topped with various herbs, spices and seasonings.. Our naturally rich ingredients bursting with flavor make your every meal healthier and tastier.. Our menu is crafted by a team of chefs and nutritionists to be both healthy and delicious. Our meals consist of multiple food groups so that you can obtain a wide range of macronutrients and micronutrients, all of which are needed to keep you energitic and feel good. We make the most out of every ingredient by getting as much nutrition as possible into every bite. So, what next? Ready to rejoice the YUM of the greens? Then <span id="join">JOIN US!!</span>
+            </div>
+        </div>
+    </div>
+    <div class="empty">
 
     </div>
+    <div class="grid-container3 gc">
 
+        <div class="item7">
 
+        </div>
+        <div class="item8">
 
-  </body>
+        </div>
+        <div class="item9">
+            <div class="who">
+                <img src="{% static 'blog/images/Asset 402@2x.png' %}">
+            </div>
+            <div class="cards">
+                <div class="above">
+                    <a href="https://www.linkedin.com/in/naklic0der/" class="card vall">
+                        <div class="overlay"></div>
+                        <div class="circle">
+                            <img src="{% static 'blog/images/Asset 185@2x.png' %}">
+                        </div>
+                        <p><span>CEO &amp; Founder</span><br>Aman Shrivastava</p>
+                    </a>
+                    <a href="#" class="card vall">
+                        <div class="overlay"></div>
+                        <div class="circle">
+                            <img src="{% static 'blog/images/Asset 182@2x.png' %}">
+                        </div>
+                        <p><span>VP-Product &amp; HR</span><br>Nithin Ramancha</p>
+                    </a><a href="#" class="card vall">
+                        <div class="overlay"></div>
+                        <div class="circle">
+                            <img src="{% static 'blog/images/Asset 181@2x.png' %}">
+                        </div>
+                        <p><span>SVP-Growth<br> &amp; Co-ounder</span><br>Swathi Vennela</p>
+                    </a>
+                </div>
+                <div class="below">
+                    <a href="#" class="card vall">
+                        <div class="overlay"></div>
+                        <div class="circle">
+                            <img src="{% static 'blog/images/Asset 184@2x.png' %}">
+                        </div>
+                        <p><span>Chief Financial Officer</span><br>Midhun Thummala</p>
+                    </a><a href="#" class="card vall">
+                        <div class="overlay"></div>
+                        <div class="circle">
+                            <img src="{% static 'blog/images/Asset 183@2x.png' %}">
+                        </div>
+                        <p><span>Lead-Engineering<br> &amp; Co-founder</span><br>Nikhil Kataria</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners. <span>2020 © Healthy Meals™</span> Media Pvt Ltd. All rights reserved.
+    </div>
+
+</body>
+
 </html>

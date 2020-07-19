@@ -18,6 +18,7 @@ import logging
 
 deleted_reviews = 0
 
+@login_required
 def menu(request):
 	if request.method == 'POST':
 

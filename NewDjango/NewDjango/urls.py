@@ -8,6 +8,7 @@ from users.forms import MyAuthForm, PasswordResetFormCustom
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', blog_views.home, name='home'),
     path('', include('users.urls',namespace='users')),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html', authentication_form=MyAuthForm),
      name='login'),
@@ -26,7 +27,7 @@ urlpatterns = [
          template_name='users/password_reset_complete.html'
      ),
      name='password_reset_complete'),
-    path('', blog_views.home, name='home'),
+    # path('', blog_views.home, name='home'),
     path('about/', blog_views.about, name='about'),
     path('',include('core.urls',namespace='core',)),
     #path('menu/', blog_views.menu, name='menu'),
