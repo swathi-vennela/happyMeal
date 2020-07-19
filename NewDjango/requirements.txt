@@ -1,0 +1,14 @@
+asgiref==3.2.5
+certifi==2018.8.24
+chardet==3.0.4
+Django==2.2.10
+django-crispy-forms==1.8.1
+djangorestframework==3.11.0
+idna==2.10
+Pillow==7.0.0
+pycryptodome==3.4.3
+pytz==2019.3
+requests==2.24.0
+sqlparse==0.3.0
+urllib3==1.25.9
+wincertstore==0.2
