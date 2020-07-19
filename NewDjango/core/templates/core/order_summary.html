@@ -117,7 +117,10 @@
           {% endif %}
           
         </td>
-        <td>Delivered</td>
+        
+          <td>{{order_item.status}}</td>
+        
+        
       </tr>
       {% empty %}
       <tr>

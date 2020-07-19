@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from PIL import Image
 from django.urls import reverse
+from datetime import datetime
 
 STATUS_CHOICES = (
     ('O', 'Order Request Accepted'),
@@ -13,6 +14,7 @@ class Item(models.Model):
     chef = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     is_veg = models.BooleanField(default=True)
+    available = models.BooleanField(default=True)
     # status = models.CharField(choices=STATUS_CHOICES, max_length=1)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
@@ -58,6 +60,18 @@ class Item(models.Model):
                 'slug' : self.slug
             })
 
+    def get_chef(self):
+        return self.chef
+
+    def set_unavailable(self):
+        self.available = False
+        super().save()      
+
+
+    def set_available(self):
+        self.available = True
+        super().save()
+
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -65,7 +79,10 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-
+    timestampStr = datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)")
+    status = models.CharField(choices=STATUS_CHOICES, max_length =1, default = 'O')
+    chef_key = models.CharField(max_length=100 , default = timestampStr)
+    
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
 
@@ -84,6 +101,13 @@ class OrderItem(models.Model):
     	return self.get_total_item_price()
     def set_change_order_status(self):
         self.ordered = True
+        super().save()
+    def set_status_delivered(self):
+        self.status = 'D'
+        super().save()
+
+    def set_status_cooking(self):
+        self.status = 'C'
         super().save()
 
 
@@ -120,3 +144,11 @@ class Review(models.Model):
 
     def __str__(self):
         return self.user.username 
+
+
+class OrderedList(models.Model):
+    chef = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null=True)
+    items = models.ManyToManyField(OrderItem)
+
+    def __str__(self):
+        return self.chef.username
