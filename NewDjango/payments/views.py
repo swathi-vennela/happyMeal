@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .models import Transaction
 from .paytm import generate_checksum, verify_checksum
-from core.models import Order, OrderedList;
+from core.models import Order;
 
 global user
 
@@ -77,18 +77,7 @@ def callback(request):
             received_data['message'] = "Checksum Matched"
             for order_item in order.items.filter(ordered = False).all():
                 order_item.set_change_order_status()
-                # item = get_object_or_404(Item, slug=slug)
-                # ordered_list, created = OrderedList.objects.get_or_create(chef= order_item.item.get_chef())
-                order_qs = OrderedList.objects.filter(chef= order_item.item.get_chef())
-                if order_qs.exists():
-                    order = order_qs[0]
-                #check if the order item is in the order
-                    order.items.add(order_item)
-                else:
-                    
-                    order = OrderedList.objects.create(chef= order_item.item.get_chef())
-                    order.items.add(order_item)
-                    
+
         else:
             print("Checksum Mismatched")
             received_data['message'] = "Checksum Mismatched"

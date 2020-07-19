@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 from PIL import Image
 from django.urls import reverse
-from datetime import datetime
 
 STATUS_CHOICES = (
     ('O', 'Order Request Accepted'),
@@ -14,9 +13,7 @@ class Item(models.Model):
     chef = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     is_veg = models.BooleanField(default=True)
-    available = models.BooleanField(default=True)
-    
-    
+    # status = models.CharField(choices=STATUS_CHOICES, max_length=1)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     calories = models.FloatField(default=0)
@@ -61,33 +58,13 @@ class Item(models.Model):
                 'slug' : self.slug
             })
 
-    def get_chef(self):
-        return self.chef
-
-    def set_unavailable(self):
-        self.available = False
-        super().save()
-        
-
-
-    def set_available(self):
-        self.available = True
-        super().save()
-        
-
 
 class OrderItem(models.Model):
-    # timestamp = models.CharField(max_length = 100, default =str(datetime.now().year)+''+str(datetime.now().month). +''+ str(datetime.now().day)+''+str(datetime.now().hour)+''+str(datetime.now().minute)+''+str(datetime.now().second)+''+ str(datetime.now().microsecond))
-    timestampStr = datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)")
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    status = models.CharField(choices=STATUS_CHOICES, max_length =1, default = 'O')
-    chef_key = models.CharField(max_length=100 , default = timestampStr)
-    
-    # timestamp = models.CharField(max_length = 100, default =datetime.now().year+''+datetime.now().month +''+ datetime.now().day+''+datetime.now().hour+''+datetime.now().minute+''+datetime.now().second+''+ datetime.now().microsecond)
 
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
@@ -108,19 +85,6 @@ class OrderItem(models.Model):
     def set_change_order_status(self):
         self.ordered = True
         super().save()
-
-
-    def set_status_delivered(self):
-        self.status = 'D'
-        super().save()
-
-    def set_status_cooking(self):
-        self.status = 'C'
-        super().save()
-
-    # def upade_timestamp(self):
-    #     self.timestamp = models.CharField(max_length = 100, default =datetime.now().year+''+datetime.now().month +''+ datetime.now().day+''+datetime.now().hour+''+datetime.now().minute+''+datetime.now().second+''+ datetime.now().microsecond)
-    #     super().save()
 
 
 
@@ -156,11 +120,3 @@ class Review(models.Model):
 
     def __str__(self):
         return self.user.username 
-
-
-class OrderedList(models.Model):
-    chef = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, null=True)
-    items = models.ManyToManyField(OrderItem)
-
-    def __str__(self):
-        return self.chef.username
