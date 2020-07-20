@@ -23,12 +23,12 @@
                 <ul>
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'about' %}">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a class="active" href="{% url 'contact' %}">Contact Us</a></li>
                     <li><a href="{% url 'core:menu' %}">Meals</a></li>
                 </ul>
             </div>
             <div class="sign">
-                <a href="#">Login</a>
+                <a href="{% url 'users:logout' %}">Logout</a>
             </div>
         </div>
         <div class="item3">

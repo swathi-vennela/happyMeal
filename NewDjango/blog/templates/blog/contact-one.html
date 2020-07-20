@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="{% static 'blog/contact.css' %}">
+
+</head>
+<body>
+
+<div class="jumbotron">
+    <h1>Contact us</h1>
+    <h2>Please Fill the below fields</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+</div>
+
+</body>
+</html>

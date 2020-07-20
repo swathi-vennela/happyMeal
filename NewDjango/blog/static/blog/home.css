@@ -4,42 +4,42 @@
 
 @font-face {
     font-family: 'font_hm';
-    src: url({% static 'fonts/HouschkaMedium.ttf' %}) format("truetype");
+    src: url(fonts/HouschkaMedium.ttf) format("truetype");
 }
 
 @font-face {
     font-family: 'font_hbr';
-    src: url({% static 'fonts/HouschkaBold_Regular.ttf' %}) format("truetype");
+    src: url(fonts/HouschkaBold_Regular.ttf) format("truetype");
 }
 
 @font-face {
     font-family: 'font_hdb';
-    src: url({% static 'fonts/Houschka_Pro_DemiBold.ttf' %}) format("truetype");
+    src: url(fonts/Houschka_Pro_DemiBold.ttf) format("truetype");
 }
 
 @font-face {
     font-family: 'font_b';
-    src: url({% static 'fonts/Benguiab.ttf' %}) format("truetype");
+    src: url(fonts/Benguiab.ttf) format("truetype");
 }
 
 @font-face {
     font-family: 'font_Lon1';
-    src: url({% static 'fonts/LondrinaSolid-Light.ttf' %}) format("truetype");
+    src: url(fonts/LondrinaSolid-Light.ttf) format("truetype");
 }
 
 @font-face {
     font-family: 'font_Lon2';
-    src: url({% static 'fonts/LondrinaSolid-Regular.ttf' %}) format("truetype");
+    src: url(fonts/LondrinaSolid-Regular.ttf) format("truetype");
 }
 
 @font-face {
     font-family: 'font_Lon3';
-    src: url(% static 'fonts/LondrinaSolid-Thin.ttf') format("truetype");
+    src: url(fonts/LondrinaSolid-Thin) format("truetype");
 }
 
 @font-face {
     font-family: 'font_Lon4';
-    src: url({% static 'fonts/LondrinaSolid-Black.ttf' %}) format("truetype");
+    src: url(fonts/LondrinaSolid-Black.ttf) format("truetype");
 }
 
 * {

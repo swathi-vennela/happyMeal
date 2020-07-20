@@ -1,12 +1,87 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Contact Us</title>
-    <link rel="stylesheet" href="{% static 'blog/contact.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/contact.css' %}">
+    <title>Healthy Meal - Contact</title>
 </head>
-<body>
 
+<body>
+   <div class="firstbg">
+       <img src="{% static 'blog/images/Asset 555@2x.png' %}">
+   </div>
+    <div class="grid-container1 gc">
+
+        <div class="item1">
+
+        </div>
+        <div class="item2">
+            <div class="logo">
+                <img src="{% static 'blog/images/Asset 777@2x.png' %}" class="logo_img">
+            </div>
+            <div class="nav">
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a class="active" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a href="{% url 'core:menu' %}">Meals</a></li>
+                </ul>
+            </div>
+            <div class="sign">
+                    {% if user.is_authenticated %}
+                        <a href=" {% url 'users:logout' %} ">Logout</a>   
+                    {% else %}
+                        <a href=" {% url 'users:login' %} ">Login</a>
+                    {% endif %}
+            </div>
+        </div>
+        <div class="item3">
+            <div class="headline">
+                We love to<br> hear your feedback
+            </div>
+        </div>
+        <div class="item4">
+            <div class="wrapper centered">
+                <form method="POST" onsubmit="return false;">
+                    <article class="letter">
+                    <div class="side">
+                        <h1>Contact us</h1>
+                        <p>
+                            <textarea placeholder="Your message"></textarea>
+                        </p>
+                    </div>
+                    <div class="side">
+                        <p>
+                            <input type="text" placeholder="Your name">
+                        </p>
+                        <p>
+                            <input type="email" placeholder="Your email">
+                        </p>
+                        <p>
+                            <button id="sendLetter">Send</button>
+                        </p>
+                    </div>
+                    </article>
+
+                </form>
+                <div class="envelope front"></div>
+                <div class="envelope back"></div>
+            </div>
+            <p class="result-message centered">Thank you for your message</p>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        function addClass() {
+            document.body.classList.add("sent");
+        }
+
+        sendLetter.addEventListener("click", addClass);
+    </script>
 </body>
+
 </html>
