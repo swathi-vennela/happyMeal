@@ -22,8 +22,8 @@ def menu(request):
 
 def ContactUs(request):
 
-    #form = ContactUsForm()
-
+    form = ContactUsForm()
+    print("Hello")
     if request.method == 'POST':
         print("POST")
         
@@ -43,16 +43,16 @@ def ContactUs(request):
             send_mail('Contact us Form Filled by the User',
             message,
             settings.EMAIL_HOST_USER,
-            ['midhunnagababu.t18@iiits.in'],
+            ['swathi.k18@iiits.in'],
             fail_silently=False)
 
-            return redirect("home")
+            return home(request)
 
         else:
-            form = ContactUsForm()
+            #form = ContactUsForm()
             print("Error Form!")
 
     else:
-        form = ContactUsForm()
+        #form = ContactUsForm()
         print ("This must be GET")
     return render(request,'blog/contact.html',{'form':form})

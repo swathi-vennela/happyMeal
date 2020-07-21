@@ -45,28 +45,47 @@
         </div>
         <div class="item4">
             <div class="wrapper centered">
+                <!--
                 <form method="POST" onsubmit="return false;">
                     <article class="letter">
                     <div class="side">
                         <h1>Contact us</h1>
+                        
                         <p>
                             <textarea placeholder="Your message"></textarea>
                         </p>
                     </div>
                     <div class="side">
+                        
                         <p>
-                            <input type="text" placeholder="Your name">
+                            <input type="text" placeholder="Your name"> 
                         </p>
                         <p>
                             <input type="email" placeholder="Your email">
                         </p>
                         <p>
-                            <button id="sendLetter">Send</button>
+                            <button id="sendLetter">Send</button>  
                         </p>
+                    
+                
                     </div>
                     </article>
+                
 
                 </form>
+            -->
+
+            
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p>
+                    <button id="sendLetter">Send</button>  
+                </p>
+                
+            </form> 
+        
+
                 <div class="envelope front"></div>
                 <div class="envelope back"></div>
             </div>
