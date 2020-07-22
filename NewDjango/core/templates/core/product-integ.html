@@ -1,42 +1,47 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <title>Home Page</title>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/item.css' %}">
+    <title>Healthy Meal - Item</title>
+    <script src="https://kit.fontawesome.com/6bea53be50.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gsap/1.19.1/TweenMax.min.js"></script>
 </head>
+
 <body>
-  {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
-        {% endfor %}
-  {% endif %}
-    <div class="container">
-    <div class="row">
-      <div class="col-md-4 col-sm-4 col-lg-4 m-4">
-              <div class="card">
-                <img src="{{item.image.url}}" class="card-img-top" alt="{{ product.name }}" height="300" width="300">
-                      <!-- <div class="card-body"> -->
-                        <div class="card-body">
-                        <h3 class="card-title"> {{ item.title }}</h5>
-                        <h5>Price: ${{ item.price }}</h5>
-                        <h5>Rating: {{ average }}/10</h5>
 
-                        <span class="badge purple mr-1"> {{item.category}} </span>
-                      </div>
-                  <div class='card-footer text-center'>
-                  <a href="{{ item.get_add_to_cart_url }}" class="btn btn-success">Add to Cart</a>
-                  <a href="{{ item.get_remove_from_cart_url }} " class="btn btn-danger">Remove from Cart</a>
-                  </div>
-               </div>
+    <img src="{% static 'core/images/Asset 1@2x.png' %}" class="firstbg">
+    <div class="grid-container1 gc">
+
+        <div class="item1">
+            <div class="logo">
+                <img src="{% static 'core/images/Asset 169@2x.png' %}" class="logo_img">
+            </div>
+            <div class="detail">
+                <div class="num">3</div>
+                <div class="name"> {{ item.title }} </div>
+                <div class="desc">{{item.description}}</div>
+            </div>
+                    
         </div>
-  </div>
+        <div class="item2">
 
-    <div class="card">
-    <div class="card-body">
+        </div>
+        <div class="item3">
+            <a href="{% url 'core:menu' %}" class="back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="image">
+                <img src="{{item.image.url}}">
+                <img src="{% static 'core/images/boo1.png' %}" class="bo">
+            </div>
+        </div>
+    </div>
+
       <h3 class="text-center">Share your review..!!</h3>
        <form action="{{ item.get_review_item_url }}" method="POST"> 
         {% csrf_token %}
@@ -55,8 +60,6 @@
         <input type="submit" name="btn btn-danger" value="Add Review">
       </form>
 
-    </div>
-  </div>
   <br>
   <div class="card">
     <div class="card-body">
@@ -84,6 +87,15 @@
     </div>
   </div>
 
-  </div>
+<!--     <div class="grid-container2 gc">
+        <div class="item4">
+            <div class="feed">
+                Hear What our Customer Say ?
+            </div>
+        </div> -->
+
+
+
 </body>
+
 </html>
