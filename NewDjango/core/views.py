@@ -338,7 +338,7 @@ def add_review(request, slug):
         if review_qs:
         	error = "Can't add more than one review for the same item.. Edit your review..!!"
         	return redirect("core:product", slug)
-        elif (request.method == "POST") and (not review_qs):
+        elif (request.method == "POST") and (not review_qs) and(request.user != item.chef):
         	form = ReviewForm(request.POST or None)
         	if form.is_valid():
         		data = form.save(commit = False)
