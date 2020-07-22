@@ -1,18 +1,85 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/meal.css' %}">
+    <title>Healthy Meal - Meals</title>
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-  <title>Home Page</title>    
+    <script src="https://kit.fontawesome.com/6bea53be50.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-  <h1 align="center">Your Order Summary!!</h1>
-  <br> <br> <br> <br> <br>
-  {% if messages %}
+    <div class="grid-container1 gc">
+        <div class="item1">
+            <div class="logo">
+                <img src="{% static 'core/images/Asset 64@2x.png' %}">
+            </div>
+            <div class="user">
+                <img src="{{ user.profile.image.url }}" class="userimg">
+
+                <div class="username">
+                    {{request.user.username}}
+                </div>
+            </div>
+            <div class="opt">
+                <div class="head">Menu</div>
+
+                <a href="{% url 'core:chef-list' %}" class="options">
+                    <i class="fas fa-book-reader"></i>
+                    <div class="optname"> Top Chefs </div>
+                </a>
+                <a href="{% url 'home' %}" class="options">
+                    <i class="fas fa-utensils"></i>
+                    <div class="optname">My Items</div>
+                </a>
+                <a href=" {% url 'core:ordered-food-list' %} " class="options active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div class="optname">Ordered Items</div>
+                </a>
+                <a href="{% url 'users:profile' %}" class="options">
+                    <i class="fas fa-user-alt"></i>
+                    <div class="optname">User Account</div>
+                </a>
+               
+
+                <div class="head">Chefs Arena</div>
+
+                <a href="{% url 'core:product-create' %}" class="options">
+                    <i class="fas fa-receipt"></i>
+                    <div class="optname">Upload Item</div>
+                </a>
+                <a href="#" class="options">
+                    <i class="fas fa-shopping-basket"></i>
+                    <div class="optname">Delivered Items</div>
+                </a>
+                <a href="{% url 'users:logout' %}" class="options signout">
+                    <i class="fas fa-power-off"></i>
+                    <div class="optname">Sign Out</div>
+                </a>
+            </div>
+        </div>
+        
+
+            </form>
+
+        <div class="item3">
+            <div class="left">
+                <div class="headline">Your Order Summary!!</div>
+                
+            </div>
+            
+            <!-- Filters sort by price, rating -->
+            
+        </div>
+        <div class="item4">
+            <div class="list">
+                {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
         {% endfor %}
@@ -37,43 +104,45 @@
     </thead>
     <tbody>
     {% for order_item in object %}
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td> {{order_item.item.title}} </td>
-        <td>{{order_item.item.price}}</td>
-        <td>{{order_item.item.discount_price}}</td>
-        <td>
-                
-                {{ order_item.quantity }}
-                
-        </td>
-        <td>
-          {% if order_item.item.discount_price %}
-                ${{order_item.get_total_discount_item_price}}
-                <span class="badge badge-primary">Saving ${{order_item.get_amount_saved}}</span>
-          {% else %}
-                ${{order_item.get_total_item_price}}
-          {% endif %}
-          <a style="color: red;" href="{% url 'core:remove-from-cart' order_item.item.slug %}">
-            <i class="fas fa-trash-alt float-right"></i>
-          </a>
-        </td>
-        <td>{{order_item.status}}</td>
-        <td colspan="6">
-          <a class="btn btn-primary float-right ml-2" href="{% url 'core:item-delivered' order_item.item.slug order_item.chef_key %}">Delivered</a>
-          <a class="btn btn-warning float-right ml-2" href="{% url 'core:item-cooking' order_item.item.slug order_item.chef_key %}">Cooking</a>
-         
-        </td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="6">Your cart is empty</td>
-      </tr>
-      <tr>
-        <td colspan="6">
-            <a class="btn btn-primary float-right" href="{% url 'core:menu' %}">Continue Shopping</a>
-        </td>
-      </tr>
+      
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td> {{order_item.item.title}} </td>
+          <td>{{order_item.item.price}}</td>
+          <td>{{order_item.item.discount_price}}</td>
+          <td>
+                  
+                  {{ order_item.quantity }}
+                  
+          </td>
+          <td>
+            {% if order_item.item.discount_price %}
+                  ${{order_item.get_total_discount_item_price}}
+                  <span class="badge badge-primary">Saving ${{order_item.get_amount_saved}}</span>
+            {% else %}
+                  ${{order_item.get_total_item_price}}
+            {% endif %}
+            <a style="color: red;" href="{% url 'core:remove-from-cart' order_item.item.slug %}">
+              <i class="fas fa-trash-alt float-right"></i>
+            </a>
+          </td>
+          <td>{{order_item.status}}</td>
+          <td colspan="6">
+            <a class="btn btn-primary float-right ml-2" href="{% url 'core:item-delivered' order_item.item.slug order_item.chef_key %}">Delivered</a>
+            <a class="btn btn-warning float-right ml-2" href="{% url 'core:item-cooking' order_item.item.slug order_item.chef_key %}">Cooking</a>
+           
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">Your cart is empty</td>
+        </tr>
+        <tr>
+          <td colspan="6">
+              <a class="btn btn-primary float-right" href="{% url 'core:menu' %}">Continue Shopping</a>
+          </td>
+        </tr>
+        
     {% endfor %}
     
     </tbody>
@@ -81,6 +150,74 @@
 
 </div>
       
-  </div>
+  </div> 
+  
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var checkboxes = document.getElementsByTagName('input');
+
+        for (var i=0; i<checkboxes.length; i++)  {
+          if (checkboxes[i].type == 'checkbox')   {
+            checkboxes[i].checked = false;
+          }
+        }
+    </script>
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

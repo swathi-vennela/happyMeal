@@ -178,7 +178,7 @@ class OrderedFoodListView(LoginRequiredMixin, View):
 				'object' : order,
 				
 			}
-			return render(self.request, 'core/ordered_food_LIST.html', context)
+			return render(self.request, 'core/ordered_food_list.html', context)
 		except ObjectDoesNotExist:
 			messages.info(self.request, "You do not have an active order")
 			return redirect("core:menu")
@@ -230,13 +230,13 @@ def add_to_cart(request, slug):
 def set_item_unavailable(request, slug):
 	item = get_object_or_404(Item, slug=slug)
 	item.set_unavailable()
-	return redirect("core:chef-item-list")
+	return redirect("home")
 
 @login_required
 def set_item_available(request, slug):
 	item = get_object_or_404(Item, slug=slug)
 	item.set_available()
-	return redirect("core:chef-item-list")
+	return redirect("home")
 
 
 
@@ -304,7 +304,7 @@ def item_delivered(request, slug, chef_key):
 		
 
 		
-	return redirect("core:product", slug=slug)
+	return redirect("core:ordered-food-list")
 
 @login_required
 def item_cooking(request, slug, chef_key):
@@ -317,7 +317,7 @@ def item_cooking(request, slug, chef_key):
 		
 
 		
-	return redirect("core:product", slug=slug)
+	return redirect("core:ordered-food-list")
 
 
 
