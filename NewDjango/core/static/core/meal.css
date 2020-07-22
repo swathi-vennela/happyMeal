@@ -95,7 +95,7 @@ body {
 }
 
 .grid-container1 {
-    grid-template-rows: 8% 25% 65%;
+    grid-template-rows: 3% 15% 87%;
     grid-template-columns: 20% 79.5%;
     grid-template-areas:
         'i1 i2'
