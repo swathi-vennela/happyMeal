@@ -43,7 +43,7 @@ def ContactUs(request):
             send_mail('Contact us Form Filled by the User',
             message,
             settings.EMAIL_HOST_USER,
-            ['swathi.k18@iiits.in'],
+            ['nikhil.k18@iiits.in'],
             fail_silently=False)
 
             return home(request)

@@ -4,7 +4,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .models import Transaction
 from .paytm import generate_checksum, verify_checksum
-from core.models import Order,OrderedList;
+from core.models import Order,OrderedList
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 global user
 
@@ -88,6 +91,16 @@ def callback(request):
                     
                     order = OrderedList.objects.create(chef= order_item.item.get_chef())
                     order.items.add(order_item)
+
+
+                mail_subject = 'Payment receipt.'
+                message = render_to_string('payments/callback.html', context=received_data)
+                plain_message = strip_tags(message)
+                to_email = user.email
+                email = EmailMessage(
+                    mail_subject, plain_message, to=[to_email]
+                )
+                email.send()
     
         else:
             print("Checksum Mismatched")
