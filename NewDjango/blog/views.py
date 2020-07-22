@@ -2,15 +2,53 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
 from . forms import *
+from core.models import *
 
 def home(request):
     if request.user.is_authenticated:
         if request.user.is_student:
             return render(request, 'blog/home.html')
         else:
-            return render(request, 'blog/store_home.html')
+            if request.method == 'POST':
+
+                filterAtt = request.POST['filter1']
+                if filterAtt:
+                    if filterAtt == "veg":
+                        filter_qs = Item.objects.filter(is_veg=True, chef = request.user)
+                        return render(request, 'blog/chef_home.html',context={'items' : filter_qs})
+                    elif filterAtt == "nonveg":
+                        filter_qs = Item.objects.filter(is_veg=False, chef = request.user)
+                        return render(request, 'core/chef_home.html',context={'items' : filter_qs})
+
+
+                filterAtt = request.POST['filter2']
+                if filterAtt:
+                    if filterAtt == "lte100":
+                        filter_qs = Item.objects.filter(price__range=(0,100), chef = request.user)
+                        return render(request, 'core/chef_home.html',context={'items' : filter_qs})
+                    elif filterAtt == "100to200":
+                        filter_qs = Item.objects.filter(price__range=(101,199), chef = request.user)
+                        return render(request, 'core/chef_home.html',context={'items' : filter_qs})
+                    elif filterAtt == "gte200":
+                        filter_qs = Item.objects.filter(price__range=(200,1000), chef = request.user)
+                        return render(request, 'core/chef_home.html',context={'items' : filter_qs})
+
+                sortAtt = request.POST['sort']
+                if sortAtt:
+                    if sortAtt == "priceAsc":
+                        sorted_qs = Item.objects.filter(chef = request.user).order_by('price')
+                        return render(request, 'core/chef_home.html',context={'items' : sorted_qs})
+                    elif sortAtt == "priceDesc":
+                        sorted_qs = Item.objects.order_by('-price')
+                        return render(request, 'core/chef_home.html',context={'items' : sorted_qs})
+
+            return render(request, 'blog/chef_home.html', context={'items' : Item.objects.filter(chef = request.user).all()})
+
+
     return render(request, 'blog/home.html')
 
+
+    
 
 def about(request):
     return render(request, 'blog/aboutus.html')

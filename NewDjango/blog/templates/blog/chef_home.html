@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/chef_home.css' %}">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Healthy Meal - Meals</title>
+    <script src="https://kit.fontawesome.com/6bea53be50.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="grid-container1 gc">
+        <div class="item1">
+            <div class="logo">
+                <img src="{% static 'core/images/Asset 64@2x.png' %}">
+            </div>
+            <div class="user">
+                <img src="{{ user.profile.image.url }}" class="userimg">
+
+                <div class="username">
+                    {{request.user.username}}
+                </div>
+            </div>
+            <div class="opt">
+                <div class="head">Menu</div>
+
+                <a href="{% url 'core:chef-list' %}" class="options">
+                    <i class="fas fa-book-reader"></i>
+                    <div class="optname"> Top Chefs </div>
+                </a>
+                <a href="{% url 'home' %}" class="options active">
+                    <i class="fas fa-utensils"></i>
+                    <div class="optname">My Items</div>
+                </a>
+                <a href=" {% url 'core:ordered-food-list' %} " class="options">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div class="optname">Ordered Items</div>
+                </a>
+                <a href="{% url 'users:profile' %}" class="options">
+                    <i class="fas fa-user-alt"></i>
+                    <div class="optname">User Account</div>
+                </a>
+               
+
+                <div class="head">Chefs Arena</div>
+
+                <a href="{% url 'core:product-create' %}" class="options">
+                    <i class="fas fa-receipt"></i>
+                    <div class="optname">Upload Item</div>
+                </a>
+                <a href="#" class="options">
+                    <i class="fas fa-shopping-basket"></i>
+                    <div class="optname">Delivered Items</div>
+                </a>
+                <a href="{% url 'users:logout' %}" class="options signout">
+                    <i class="fas fa-power-off"></i>
+                    <div class="optname">Sign Out</div>
+                </a>
+            </div>
+        </div>
+        <div class="item2">
+            <div class="search_bar">
+                <form action="{% url 'core:search' %}">
+                    <i class="fas fa-search"></i>
+                    <input name="q" value="{{request.GET.q}}"type="text" placeholder="Search..">
+                </form>
+            </div>
+            <br> <br> <br> <br> 
+            <!-- Filters veg non veg -->
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+                <div class="nut">
+                    <div class="carb">
+<!--                         <label class="toggle-control">
+                            <input type="checkbox" checked="checked">
+                            <span class="control"></span>
+                        </label><span>Veg</span> -->
+                    </div>
+                </div>
+        </div>
+
+            </form>
+
+        <div class="item3">
+            <div class="left">
+                <div class="headline">My Food Item list.</div>
+                <!-- <div class="hor_nav">
+                    <ul>
+                        <li><a href="#">Bread</a></li>
+                        <li><a href="#">Soup</a></li>
+                        <li><a class="active" href="#">Egg</a></li>
+                        <li><a href="#">Paneer</a></li>
+                        <li><a href="#">Fruits</a></li>
+                        <li><a href="#">Milk Products</a></li>
+                        <li><a href="#">Nuts</a></li>
+                    </ul>
+                </div> -->
+            </div>
+<!--             <div class="right">
+                <div class="filter">
+                    <select data-menu>
+                        <option selected>Filter</option>
+                        <option>Price-low to high</option>
+                        <option>Highest Rated</option>
+                        <option>Alphabetically</option>
+                    </select>
+                </div>
+            </div> -->
+            <div class="right">
+                  <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="filters"></label>
+
+                    <select id="filter1" name="filter1" onchange="this.form.submit()">
+                      <option selected="selected"> Veg / NonVeg </option>
+                      <option value="veg">Veg</option>
+                      <option value="nonveg">Non-veg</option>
+                    </select>
+
+                    <select id="filter2" name="filter2" onchange="this.form.submit()" > 
+                      <option selected="selected"> Price </option>
+                      <option value="lte100">below 100</option>
+                      <option value="100to200">[100-200]</option>
+                      <option value="gte200">above 200</option>
+                    </select>
+
+                    <select id="sort" name="sort" onchange="this.form.submit()" > 
+                      <option selected="selected"> Sort By </option>
+                      <option value="priceAsc">Price (low to high)</option>
+                      <option value="priceDesc">Price (high to low)</option>
+                    </select>      
+
+                  </form>
+            </div>
+
+            <!-- Filters sort by price, rating -->
+            
+        </div>
+        <div class="item4">
+            <div class="list">
+                {% for object in items %}
+                          <!--Item 1-->
+                          <div class="food_item">
+                              <div class="one">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                  <i class="fas fa-ellipsis-v"></i>
+                              </div>
+                              <div class="two">
+                                  <img src="{{object.image.url}}">
+                              </div>
+                              <div class="three">
+                                  <div class="upar">
+                                      <a href="{{object.get_absolute_url}} " class="name">
+                                          {{object.title}}
+                                      </a>
+                                      <div class="price">
+                                          Rs. {{ object.price }}
+                                      </div>
+                                  </div>
+                                  <div class="val">
+                                      {{object.calories}} Kcal per portion
+                                  </div>
+                                  <div class="ing">
+                                      <div>
+                                          <i class="fas fa-apple-alt"></i>
+                                      </div>
+                                      <div>
+                                          <i class="fas fa-pepper-hot"></i>
+                                      </div>
+                                  </div>
+                                  <div class='card-footer text-center'>
+                    {% if object.available %}
+                      <a href="{% url 'core:set-item-unavailable' object.slug %}" class="btn btn-success">Unavailable</a>
+                      <a href="{% url 'core:edit_item' object.slug %}" class="btn btn-danger">Edit</a>
+                    {% else %}
+                      <a href="{% url 'core:set-item-available' object.slug %}" class="btn btn-success">Available</a>
+                      <a href="{% url 'core:edit_item' object.slug %}" class="btn btn-danger">Edit</a>
+                    {% endif %}
+                      
+                  </div>
+                                 
+                              </div>
+                          </div>
+                          <!--Item 1 ends-->
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var checkboxes = document.getElementsByTagName('input');
+
+        for (var i=0; i<checkboxes.length; i++)  {
+          if (checkboxes[i].type == 'checkbox')   {
+            checkboxes[i].checked = false;
+          }
+        }
+    </script>
+</body>
+
+</html>
+
+    <!--                 <div class="pro">
+                        <label class="toggle-control">
+                            <input type="checkbox" checked="checked">
+                            <span class="control"></span>
+                        </label><span>Protein</span>
+                    </div> -->
