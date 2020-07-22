@@ -30,6 +30,7 @@ urlpatterns = [
     path('item/new/', create_item, name='product-create'),
     path('chef-list/',chef_list, name='chef-list'),
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
+     path('order-history/', OrderHistoryView.as_view(), name='order-history'),
     path('ordered-food-list/', OrderedFoodListView.as_view(), name='ordered-food-list'),
     path('add-to-cart/<slug>/',add_to_cart, name='add-to-cart'),
     path('set-item-unavailable/<slug>/',set_item_unavailable, name='set-item-unavailable'),

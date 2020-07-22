@@ -38,7 +38,7 @@
                     <i class="fas fa-utensils"></i>
                     <div class="optname">Meals</div>
                 </a>
-                <a href=" {% url 'core:order-summary' %} " class="options active">
+                <a href=" {% url 'core:order-summary' %} " class="options">
                     <i class="fas fa-shopping-cart"></i>
                     <div class="optname">Cart</div>
                 </a>
@@ -46,7 +46,7 @@
                     <i class="fas fa-user-alt"></i>
                     <div class="optname">User Account</div>
                 </a>
-                <a href="{% url 'core:order-history' %}" class="options">
+                <a href="{% url 'core:order-history' %}" class="options active">
                     <i class="fas fa-shopping-basket"></i>
                     <div class="optname">Order History</div>
                 </a>
@@ -85,7 +85,7 @@
             </form> -->
         <div class="item3">
             <div class="left">
-                <div class="headline">Your Order Summary!!</div>
+                <div class="headline">Your Order History!!</div>
                 
             </div>
             
@@ -104,67 +104,9 @@
     
     <div class="table-responsive text-nowrap">
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Item title</th>
-        <th scope="col">Price</th>
-        <th scope="col">Discount Price</th>        
-        <th scope="col">Quantity</th>
-        <th scope="col">Total Item Price</th>
-
-      </tr>
-    </thead>
-    <tbody>
-    {% for order_item in object1 %}
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td> {{order_item.item.title}} </td>
-        <td>{{order_item.item.price}}</td>
-        <td>{{order_item.item.discount_price}}</td>
-        <td>
-                <a href="{% url 'core:remove-single-item-from-cart' order_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
-                {{ order_item.quantity }}
-                <a href="{% url 'core:add-to-cart' order_item.item.slug %}"><i class="fas fa-plus ml-2"></i></a>
-        </td>
-        <td>
-          {% if order_item.item.discount_price %}
-                ${{order_item.get_total_discount_item_price}}
-                <span class="badge badge-primary">Saving ${{order_item.get_amount_saved}}</span>
-          {% else %}
-                ${{order_item.get_total_item_price}}
-          {% endif %}
-          <a style="color: red;" href="{% url 'core:remove-from-cart' order_item.item.slug %}">
-            <i class="fas fa-trash-alt float-right"></i>
-          </a>
-        </td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="6">Your cart is empty</td>
-      </tr>
-      <tr>
-        <td colspan="6">
-            <a class="btn btn-primary float-right" href="{% url 'core:menu' %}">Continue Shopping</a>
-        </td>
-      </tr>
-    {% endfor %}
-    {% if object.get_total %}
-    <tr>
-      <td colspan="5"><b>Order Total</b></td>
-      <td><b>${{ object.get_total }} </b></td>
-    </tr>
-    <tr>
-      <td colspan="6">
-        <a class="btn btn-warning float-right ml-2" href="{% url 'payments:pay' %}">Proceed to checkout</a>
-        <a class="btn btn-primary float-right" href="{% url 'core:menu' %}">Continue Shopping</a>
-      </td>
-    </tr>
-    {% endif %}
-    </tbody>
-  <!-- </table>
-  <h2 align="center">Your Order History!!</h2>
+  
+  </table>
+  
   <table class="table">
     <thead>
       <tr>
@@ -175,6 +117,7 @@
         <th scope="col">Quantity</th>
         <th scope="col">Total Item Price</th>
         <th scope="col">Status</th>
+        <th scope="col">Date-Time</th>
 
 
       </tr>
@@ -202,6 +145,9 @@
         </td>
         
           <td>{{order_item.status}}</td>
+          </td>
+        
+          <td>{{order_item.chef_key}}</td>
         
         
       </tr>
@@ -226,7 +172,7 @@
     </tr>
     {% endif %}
     </tbody>
-  </table> -->
+  </table>
 
 </div>
       

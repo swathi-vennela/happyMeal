@@ -151,6 +151,22 @@ class OrderSummaryView(LoginRequiredMixin, View):
 			messages.info(self.request, "You do not have an active order")
 			return redirect("core:menu")
 
+class OrderHistoryView(LoginRequiredMixin, View):
+	def get(self, *args, **kwargs):
+		try:
+			order = Order.objects.get(user=self.request.user, ordered=False)
+			order1 = Order.objects.get(user=self.request.user, ordered=False).items.filter(user=self.request.user,ordered=False).all()
+			order2 = Order.objects.get(user=self.request.user, ordered=False).items.filter(user=self.request.user,ordered=True).all()
+			context = {
+				'object' : order,
+				'object1' : order1,
+				'object2' : order2
+			}
+			return render(self.request, 'core/order_history.html', context)
+		except ObjectDoesNotExist:
+			messages.info(self.request, "You do not have an order History")
+			return redirect("core:menu")
+
 class OrderedFoodListView(LoginRequiredMixin, View):
 	def get(self, *args, **kwargs):
 		try:
