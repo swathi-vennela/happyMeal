@@ -122,6 +122,7 @@ def create_item(request):
 		if form.is_valid():
 			data = form.save(commit=False)
 			data.chef = request.user 
+			data.slug = datetime.now().strftime("%c")
 			data.save()
 			return redirect("core:menu")
 	else:
