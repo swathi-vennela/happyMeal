@@ -24,8 +24,9 @@
             </div>
             <div class="nav">
                 <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'home' %}" class="active">Home</a></li>
                     <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'contact' %} ">Chef</a></li>
                     <li><a href="{% url 'contact' %} ">Contact Us</a></li>
                     <li><a href="{% url 'core:menu' %}">Meals</a></li>
 
@@ -35,10 +36,10 @@
                     {% if user.is_authenticated %}
                         <li><a href=" {% url 'users:logout' %} ">Logout</a></li>    
                     {% else %}
-                    <ul>
-                        <li><a href=" {% url 'users:login' %} ">Login</a></li>
-                        <li><a href=" {% url 'users:signup' %} ">Signup</a></li>
-                    </ul>
+                    <div class="sign">
+                        <a href=" {% url 'users:login' %} ">Login</a></li>
+                    </div>
+                    
                     {% endif %}
             </div>
         </div>

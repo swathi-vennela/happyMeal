@@ -182,17 +182,23 @@ body {
 .item2 .sign {
     height: 100%;
     width: 20%;
-    /*    background-color: rgba(0,0,0,0.6);*/
+       /* background-color: rgba(0,0,0,0.6); */
     display: flex;
     align-items: flex-end;
     justify-content: center;
     padding-left: 5%;
+    margin-left: 60%;
 }
 
 .item2 .sign a {
     font-size: 18px;
     color: #6CC164;
     text-decoration: none;
+    transition: 0.5s;
+}
+
+.item2 .sign a:hover {
+    color: #41923A;
 }
 
 .item3 {

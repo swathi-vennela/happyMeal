@@ -13,28 +13,14 @@
   <body>
 
 
-
+<img src="{% static 'users/images/Asset302x.png' %}" class="logo">
 
 
 <div class="image container">
 
   <img class="posteregg"src="{% static 'users/images/Asset292x.png' %}" alt="login poster">
-    <img class="rightbase" src="{% static 'users/images/Asset552x.png' %}" alt="rightbase">
-    <img class="greenstem" src="{% static 'users/images/Asset282x.png' %}" alt="greenstem">
-    <img class="discount" src="{% static 'users/images/Asset272x.png' %}" alt="discount">
-    <img class="discborder" src="{% static 'users/images/Asset262x.png' %}" alt="discborder">
-
-    <img class="fdot" src="{% static 'users/images/Asset232x.png' %}"alt="fdot">
-    <img class="sdot" src="{% static 'users/images/Asset242x.png' %}" alt="sdot">
-    <img class="tdot" src="{% static 'users/images/Asset252x.png' %}" alt="tdot">
-
-    <img class="ftext" src="{% static 'users/images/Asset402x.png' %}" alt="ftext">
-    <img class="stext" src="{% static 'users/images/Asset382x.png' %}" alt="stext">
-    <img class="ttext" src="{% static 'users/images/Asset392x.png' %}" alt="ttext">
+    <img class="rightbase" src="{% static 'users/images/Asset400.png' %}" alt="rightbase">
 </div>
-
-
-
 
 
 
@@ -47,20 +33,23 @@
         <form class="form"  method="POST" action="{% url 'users:login' %}">
             {% csrf_token %}
 
-            {{ form.errors}}
+            <!-- Please display error here but by different means, coz it is disturbing whole UI-->
+            <!-- DO not use form.error-->
             {{ form.username}}
 
             <br>
             {{ form.password }}
 
             <br>
-                 <button type="submit" name="button" >Login</button>
-                  <!-- <img src="{% static 'users/images/Asset 120@2x.png' %}" style="position: absolute;width: 75px;right: 195px;top: 250px;">
-                 <a href="register.html">
-                      <img src="{% static 'users/images/Asset 119@2x.png' %}" style="position: absolute;width: 130px;right: 59px;top: 250px;">
-                  </a>  -->
+                 <button type="submit" name="button" class="sub">Login</button>
+                 
 
         </form>
+
+        <img src="{% static 'users/images/Asset 120@2x.png' %}" style="position: absolute;width: 75px;right: 23%;bottom: 30%;">
+        <a href="{% url 'users:signup' %}">
+             <img src="{% static 'users/images/Asset 119@2x.png' %}" style="position: absolute;width: 130px;right: 14.5%;bottom: 30%;">
+         </a> 
         <br>
 
 </div>
