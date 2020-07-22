@@ -1081,15 +1081,28 @@ return /******/ (function(modules) { // webpackBootstrap
             </div>
             <div class="nav">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a class="active" href="#">Chefs</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Meals</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a class="active" href="{%url 'core:chef-list'%}">Chefs</a></li>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a href="{% url 'core:menu' %}">Meals</a></li>
                 </ul>
             </div>
-            <div class="sign">
+<!--             <div class="sign">
                 <a href="#">Login</a>
+            </div> -->
+            <div class="nav">
+                    {% if user.is_authenticated %}
+                    	<div class="sign">
+                    		<a href=" {% url 'users:logout' %} ">Logout</a>	
+                    	</div>
+                           
+                    {% else %}
+                    <div class="sign">
+                        <a href=" {% url 'users:login' %} ">Login</a>
+                    </div>
+                    
+                    {% endif %}
             </div>
         </div>
         <div class="item3">
