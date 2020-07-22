@@ -111,7 +111,7 @@ def search(request):
 
 def chef_list(request):
 	chefs = AbsUser.objects.filter(is_store_owner=True)
-	return render(request, 'core/chef-list.html',context={'chefs':chefs})
+	return render(request, 'core/chefs.html',context={'chefs':chefs})
 
 
 @store_required
