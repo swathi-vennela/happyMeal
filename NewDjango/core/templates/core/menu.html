@@ -47,15 +47,15 @@
                     <div class="optname">Order History</div>
                 </a>
 
-                <div class="head">Community</div>
+                <div class="head">Chefs Arena</div>
 
-                <a href="#" class="options">
+                <a href="{% url 'core:product-create' %}" class="options">
                     <i class="fas fa-receipt"></i>
-                    <div class="optname">Reviews</div>
+                    <div class="optname">Upload Item</div>
                 </a>
-                <a href="#" class="options">
+                <a href="{% url 'core:chef-list' %}" class="options">
                     <i class="fas fa-book-reader"></i>
-                    <div class="optname">User Recipies</div>
+                    <div class="optname">Top chefs</div>
                 </a>
                 <a href="{% url 'users:logout' %}" class="options signout">
                     <i class="fas fa-power-off"></i>
@@ -70,37 +70,26 @@
                     <input name="q" value="{{request.GET.q}}"type="text" placeholder="Search..">
                 </form>
             </div>
+            <br> <br> <br> <br> 
             <!-- Filters veg non veg -->
             <form method="POST" enctype="multipart/form-data">
               {% csrf_token %}
                 <div class="nut">
                     <div class="carb">
-                        <label class="toggle-control">
+<!--                         <label class="toggle-control">
                             <input type="checkbox" checked="checked">
                             <span class="control"></span>
-                        </label><span>Veg</span>
+                        </label><span>Veg</span> -->
                     </div>
                 </div>
         </div>
 
             </form>
-<!--             <form method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-                <div class="nut">
-                    <div class="carb">
-                        <select id="filter1" name="filter1" onchange="this.form.submit()">
-                          <option selected="selected"> Veg / NonVeg </option>
-                          <option value="veg">Veg</option>
-                          <option value="nonveg">Non-veg</option>
-                        </select>
-                  </div>
-                </div>
 
-            </form> -->
         <div class="item3">
             <div class="left">
                 <div class="headline">What would You like to have in Breakfast ?</div>
-                <div class="hor_nav">
+                <!-- <div class="hor_nav">
                     <ul>
                         <li><a href="#">Bread</a></li>
                         <li><a href="#">Soup</a></li>
@@ -110,9 +99,9 @@
                         <li><a href="#">Milk Products</a></li>
                         <li><a href="#">Nuts</a></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
-            <div class="right">
+<!--             <div class="right">
                 <div class="filter">
                     <select data-menu>
                         <option selected>Filter</option>
@@ -121,6 +110,32 @@
                         <option>Alphabetically</option>
                     </select>
                 </div>
+            </div> -->
+            <div class="right">
+                  <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="filters"></label>
+
+                    <select id="filter1" name="filter1" onchange="this.form.submit()">
+                      <option selected="selected"> Veg / NonVeg </option>
+                      <option value="veg">Veg</option>
+                      <option value="nonveg">Non-veg</option>
+                    </select>
+
+                    <select id="filter2" name="filter2" onchange="this.form.submit()" > 
+                      <option selected="selected"> Price </option>
+                      <option value="lte100">below 100</option>
+                      <option value="100to200">[100-200]</option>
+                      <option value="gte200">above 200</option>
+                    </select>
+
+                    <select id="sort" name="sort" onchange="this.form.submit()" > 
+                      <option selected="selected"> Sort By </option>
+                      <option value="priceAsc">Price (low to high)</option>
+                      <option value="priceDesc">Price (high to low)</option>
+                    </select>      
+
+                  </form>
             </div>
 
             <!-- Filters sort by price, rating -->
